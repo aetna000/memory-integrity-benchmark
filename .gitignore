@@ -13,3 +13,5 @@ results/published/*
 !results/published/final-v4/**
 !results/published/llmbasedos-v0.4-rc1-seed-20260801/
 !results/published/llmbasedos-v0.4-rc1-seed-20260801/**
+!results/published/zep-L-empirical-seed-20260801/
+!results/published/zep-L-empirical-seed-20260801/**

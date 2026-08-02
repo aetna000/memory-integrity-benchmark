@@ -15,23 +15,31 @@ LLMBASEDOS_EVIDENCE = (
     / "evidence"
 )
 COMPETITOR_EVIDENCE = ROOT / "results" / "published" / "final-v4" / "evidence"
+ZEP_L_EVIDENCE = (
+    ROOT / "results" / "published" / "zep-L-empirical-seed-20260801" / "evidence"
+)
 
 
 class CombinedReportTests(unittest.TestCase):
     def test_public_documents_contain_the_counter_derived_section(self) -> None:
-        section = render_results_section(LLMBASEDOS_EVIDENCE, COMPETITOR_EVIDENCE)
+        section = render_results_section(
+            LLMBASEDOS_EVIDENCE, COMPETITOR_EVIDENCE, ZEP_L_EVIDENCE
+        )
         for relative in ("README.md", "docs/METHODOLOGY.md"):
             document = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(replace_results_section(document, section), document)
 
     def test_table_has_four_systems_and_all_seven_attacks(self) -> None:
-        section = render_results_section(LLMBASEDOS_EVIDENCE, COMPETITOR_EVIDENCE)
+        section = render_results_section(
+            LLMBASEDOS_EVIDENCE, COMPETITOR_EVIDENCE, ZEP_L_EVIDENCE
+        )
         table_lines = [line for line in section.splitlines() if line.startswith("|")]
         self.assertEqual(len(table_lines), 9)
         self.assertIn("LLMBASEDOS v0.4-rc1", table_lines[0])
         self.assertIn("Mem0", table_lines[0])
         self.assertIn("Zep", table_lines[0])
         self.assertIn("Letta", table_lines[0])
+        self.assertIn("| L — secret ingestion | PASS | PASS | [PASS]", table_lines[-1])
 
 
 if __name__ == "__main__":

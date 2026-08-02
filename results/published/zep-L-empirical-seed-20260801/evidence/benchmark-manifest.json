@@ -1,0 +1,45 @@
+{
+  "adapter_targets": {
+    "zep": {
+      "adapter_version": "3.25.0",
+      "target_commit": null
+    }
+  },
+  "attacks": [
+    "L"
+  ],
+  "base_package": {
+    "archive": "zep-L-empirical-seed-20260801.tar.gz",
+    "archive_sha256": "d7179212b8b3d35b847e0a13161a6181719c0ca281194c1504b1def2e33e0574",
+    "directory": "zep-L-empirical-seed-20260801",
+    "manifest_sha256": "51df1d5c6a167a12259382f11808738bd253533b694dc3ddf255f1807d1a39e4",
+    "raw_trials_sha256": "d56480b49f98d3d03a6c5dd83e9e6ae4c22fe01d4a3ca375fa84cace2a0b9dfe"
+  },
+  "command_contract": "python3 -m runner.run --systems <...> --attacks <...> --trials-from-yaml --seed <s>",
+  "created_at": "2026-08-02T17:56:35+00:00",
+  "environment": {
+    "implementation": "CPython",
+    "platform": "Linux-6.14.0-37-generic-x86_64-with-glibc2.41",
+    "python": "3.13.3"
+  },
+  "harness_commit": "8ba1c72b8af24f85e29b5a563adb5a05b8c0c881",
+  "harness_worktree_dirty_at_run": false,
+  "narrative_generated_by_agent": false,
+  "package_version": "publication-zep-L-empirical-relative-paths",
+  "publication_sanitization": {
+    "kind": "absolute_workspace_path_relativization_only",
+    "modified_evidence_file_count": 0,
+    "replacement_count": 0,
+    "trials_reexecuted": 0
+  },
+  "record_count": 100,
+  "run_id": "zep-L-empirical-seed-20260801",
+  "seed": 20260801,
+  "systems": [
+    "zep"
+  ],
+  "trial_range": {
+    "end": null,
+    "start": 1
+  }
+}

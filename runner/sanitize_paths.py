@@ -211,7 +211,10 @@ def sanitize_package(
         (output_dir / "aggregate-metrics.json").read_text(encoding="utf-8")
     )
     expected_aggregate = dict(new_result)
-    if not expected_aggregate.get("metric_exclusions"):
+    if (
+        "metric_exclusions" not in persisted_aggregate
+        and not expected_aggregate.get("metric_exclusions")
+    ):
         expected_aggregate.pop("metric_exclusions", None)
     if persisted_aggregate != expected_aggregate:
         raise AssertionError("persisted aggregate metrics do not match raw trial counters")

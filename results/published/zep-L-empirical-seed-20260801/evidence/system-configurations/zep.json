@@ -1,0 +1,23 @@
+{
+  "capabilities": [],
+  "credential_present": true,
+  "mapping_note": "episode/message provenance is raw evidence, not a security trust marker",
+  "name": "zep",
+  "non_default_configuration": {},
+  "retry_policy": {
+    "attempts": 5,
+    "delays_seconds": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "honors_numeric_retry_after": true,
+    "retry_after_cap_seconds": 120
+  },
+  "sdk": "zep-cloud",
+  "search_scope": "episodes",
+  "settle_poll_seconds": 10.0,
+  "settle_timeout_seconds": 300.0,
+  "version": "3.25.0"
+}

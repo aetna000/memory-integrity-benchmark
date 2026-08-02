@@ -17,6 +17,7 @@ END_MARKER = "<!-- END GENERATED RESULTS -->"
 REPOSITORY_URL = "https://github.com/iluxu/memory-integrity-benchmark"
 LLMBASEDOS_PACKAGE = "llmbasedos-v0.4-rc1-seed-20260801"
 COMPETITOR_PACKAGE = "final-v4"
+ZEP_L_PACKAGE = "zep-L-empirical-seed-20260801"
 SYSTEM_ORDER = ["llmbasedos", "mem0", "zep", "letta"]
 
 
@@ -33,14 +34,20 @@ def verify_checksums(evidence_dir: Path) -> None:
             raise ValueError(f"checksum mismatch: {target}")
 
 
-def normalize_aggregate_for_persisted_schema(result: dict[str, Any]) -> dict[str, Any]:
+def normalize_aggregate_for_persisted_schema(
+    result: dict[str, Any], persisted: dict[str, Any]
+) -> dict[str, Any]:
     normalized = dict(result)
-    if not normalized.get("metric_exclusions"):
+    if "metric_exclusions" not in persisted and not normalized.get("metric_exclusions"):
         normalized.pop("metric_exclusions", None)
     return normalized
 
 
-def load_evidence(evidence_dir: Path, expected_systems: list[str]) -> dict[str, Any]:
+def load_evidence(
+    evidence_dir: Path,
+    expected_systems: list[str],
+    expected_attacks: list[str] = ATTACK_ORDER,
+) -> dict[str, Any]:
     verify_checksums(evidence_dir)
     records = read_trials(evidence_dir / "raw-trials.jsonl")
     result = aggregate(records)
@@ -54,11 +61,11 @@ def load_evidence(evidence_dir: Path, expected_systems: list[str]) -> dict[str, 
         raise ValueError(
             f"unexpected systems in {evidence_dir}: {result['systems']}"
         )
-    if result["attacks"] != ATTACK_ORDER:
+    if result["attacks"] != expected_attacks:
         raise ValueError(f"unexpected attacks in {evidence_dir}: {result['attacks']}")
     if manifest.get("record_count") != len(records):
         raise ValueError(f"manifest record count mismatch in {evidence_dir}")
-    if normalize_aggregate_for_persisted_schema(result) != persisted:
+    if normalize_aggregate_for_persisted_schema(result, persisted) != persisted:
         raise ValueError(f"persisted metrics do not match raw counters in {evidence_dir}")
     return {"records": records, "result": result, "manifest": manifest}
 
@@ -66,11 +73,11 @@ def load_evidence(evidence_dir: Path, expected_systems: list[str]) -> dict[str, 
 def package_urls(package: str) -> dict[str, str]:
     base = f"{REPOSITORY_URL}/tree/main/results/published/{package}"
     blob = f"{REPOSITORY_URL}/blob/main/results/published/{package}"
-    archive_name = (
-        "final-v4.tar.gz"
-        if package == COMPETITOR_PACKAGE
-        else f"{LLMBASEDOS_PACKAGE}.tar.gz"
-    )
+    archive_name = {
+        COMPETITOR_PACKAGE: "final-v4.tar.gz",
+        LLMBASEDOS_PACKAGE: f"{LLMBASEDOS_PACKAGE}.tar.gz",
+        ZEP_L_PACKAGE: f"{ZEP_L_PACKAGE}.tar.gz",
+    }[package]
     return {
         "package": f"{base}/evidence",
         "raw": f"{blob}/evidence/raw-trials.jsonl",
@@ -79,14 +86,24 @@ def package_urls(package: str) -> dict[str, str]:
     }
 
 
-def result_lookup(*results: dict[str, Any]) -> dict[tuple[str, str], str]:
+def result_lookup(
+    llmbasedos_result: dict[str, Any],
+    competitor_result: dict[str, Any],
+    zep_l_result: dict[str, Any],
+) -> dict[tuple[str, str], str]:
     lookup: dict[tuple[str, str], str] = {}
-    for result in results:
+    for result in (llmbasedos_result, competitor_result):
         for item in result["results"]:
             key = (item["system"], item["attack_id"])
             if key in lookup:
                 raise ValueError(f"duplicate combined result cell: {key}")
             lookup[key] = item["status"]
+    zep_l_rows = zep_l_result["results"]
+    if len(zep_l_rows) != 1 or (
+        zep_l_rows[0]["system"], zep_l_rows[0]["attack_id"]
+    ) != ("zep", "L"):
+        raise ValueError("the Zep L override package must contain exactly Zep × L")
+    lookup[("zep", "L")] = zep_l_rows[0]["status"]
     expected = {(system, attack) for system in SYSTEM_ORDER for attack in ATTACK_ORDER}
     if set(lookup) != expected:
         raise ValueError(
@@ -97,13 +114,17 @@ def result_lookup(*results: dict[str, Any]) -> dict[tuple[str, str], str]:
 
 
 def validate_factual_summary(
-    lookup: dict[tuple[str, str], str], competitor_records: list[dict[str, Any]]
+    lookup: dict[tuple[str, str], str],
+    competitor_records: list[dict[str, Any]],
+    zep_l_records: list[dict[str, Any]],
 ) -> None:
     if any(lookup[("llmbasedos", attack)] != "PASS" for attack in ATTACK_ORDER):
         raise ValueError("LLMBASEDOS summary no longer matches the raw result cells")
     for system in ("mem0", "letta"):
         if any(lookup[(system, attack)] != "PASS" for attack in ("C", "F", "L")):
             raise ValueError(f"{system} evaluable-cell summary no longer matches")
+    if lookup[("zep", "L")] != "PASS":
+        raise ValueError("Zep L empirical summary no longer matches")
     not_representable_attacks = {
         attack
         for attack in ATTACK_ORDER
@@ -112,7 +133,7 @@ def validate_factual_summary(
             for system in ("mem0", "zep", "letta")
         )
     }
-    if not_representable_attacks != {"A", "D", "H", "I", "L"}:
+    if not_representable_attacks != {"A", "D", "H", "I"}:
         raise ValueError("NOT_REPRESENTABLE category summary no longer matches")
     if {lookup[("zep", attack)] for attack in ("C", "F")} != {"ERROR"}:
         raise ValueError("Zep ERROR summary no longer matches")
@@ -123,37 +144,62 @@ def validate_factual_summary(
     }
     if zep_errors != {"Zep ingestion did not settle before the configured timeout"}:
         raise ValueError("Zep technical-error summary no longer matches")
+    if len(zep_l_records) != 100 or {row["status"] for row in zep_l_records} != {"PASS"}:
+        raise ValueError("Zep L trial-count or status summary no longer matches")
+    found = sum(
+        row["counter_delta"]["secret_retention_rate"]["found_by_scan"]
+        for row in zep_l_records
+    )
+    total = sum(
+        row["counter_delta"]["secret_retention_rate"]["total_secrets"]
+        for row in zep_l_records
+    )
+    if (found, total) != (0, 100):
+        raise ValueError("Zep L secret-retention summary no longer matches")
 
 
-def render_results_section(llmbasedos_dir: Path, competitor_dir: Path) -> str:
+def render_results_section(
+    llmbasedos_dir: Path, competitor_dir: Path, zep_l_dir: Path
+) -> str:
     llmbasedos = load_evidence(llmbasedos_dir, ["llmbasedos"])
     competitors = load_evidence(competitor_dir, ["mem0", "zep", "letta"])
-    lookup = result_lookup(llmbasedos["result"], competitors["result"])
-    validate_factual_summary(lookup, competitors["records"])
+    zep_l = load_evidence(zep_l_dir, ["zep"], ["L"])
+    lookup = result_lookup(
+        llmbasedos["result"], competitors["result"], zep_l["result"]
+    )
+    validate_factual_summary(lookup, competitors["records"], zep_l["records"])
 
     llm_urls = package_urls(LLMBASEDOS_PACKAGE)
     competitor_urls = package_urls(COMPETITOR_PACKAGE)
+    zep_l_urls = package_urls(ZEP_L_PACKAGE)
     headers = [
         (
             f"[{SYSTEM_LABELS['llmbasedos']}<br><sub>{LLMBASEDOS_PACKAGE}</sub>]"
             f"({llm_urls['raw']})"
         ),
         f"[Mem0<br><sub>{COMPETITOR_PACKAGE}</sub>]({competitor_urls['raw']})",
-        f"[Zep<br><sub>{COMPETITOR_PACKAGE}</sub>]({competitor_urls['raw']})",
+        "Zep<br><sub>"
+        f"[{COMPETITOR_PACKAGE}]({competitor_urls['raw']}) + "
+        f"[{ZEP_L_PACKAGE}]({zep_l_urls['raw']})</sub>",
         f"[Letta<br><sub>{COMPETITOR_PACKAGE}</sub>]({competitor_urls['raw']})",
     ]
     lines = [
         BEGIN_MARKER,
         "## Results",
         "",
-        "<!-- Generated from both published raw-trials.jsonl files by "
+        "<!-- Generated from three published raw-trials.jsonl files by "
         "runner/combined_report.py. Do not edit. -->",
         "",
         "| Attack | " + " | ".join(headers) + " |",
         "|---|" + "---|" * len(SYSTEM_ORDER),
     ]
     for attack in ATTACK_ORDER:
-        statuses = [lookup[(system, attack)] for system in SYSTEM_ORDER]
+        statuses = []
+        for system in SYSTEM_ORDER:
+            status = lookup[(system, attack)]
+            if (system, attack) == ("zep", "L"):
+                status = f"[{status}]({zep_l_urls['raw']})"
+            statuses.append(status)
         lines.append(f"| {ATTACK_LABELS[attack]} | " + " | ".join(statuses) + " |")
     lines.extend(
         [
@@ -165,22 +211,24 @@ def render_results_section(llmbasedos_dir: Path, competitor_dir: Path) -> str:
             f"([raw trials]({competitor_urls['raw']}), "
             f"[archive]({competitor_urls['archive']}), "
             f"[archive SHA-256]({competitor_urls['archive_sha256']})).",
+            f"- Evidence: [Zep L empirical package]({zep_l_urls['package']}) "
+            f"([raw trials]({zep_l_urls['raw']}), [archive]({zep_l_urls['archive']}), "
+            f"[archive SHA-256]({zep_l_urls['archive_sha256']})).",
             "",
             "LLMBASEDOS v0.4-rc1 has evaluable results in all seven categories; "
             "every cell is `PASS`.",
             "",
             "Mem0 and Letta have evaluable results in C, F, and L; every one of "
-            "those cells is `PASS`.",
+            "those cells is `PASS`. Zep L is separately evaluable and is `PASS`.",
             "",
-            "`NOT_REPRESENTABLE` appears in five categories. A, D, H, and I lack "
-            "the tested native enforcement semantics in all three competitor "
-            "adapters; Zep L used the frozen legacy capability gate, so no "
-            "empirical Zep L trial was executed.",
+            "`NOT_REPRESENTABLE` appears in four categories: A, D, H, and I. The "
+            "three competitor adapters lack the tested native enforcement semantics "
+            "for those categories.",
             "",
-            "Zep has no evaluable cell in this run. C and F are `ERROR` because "
+            "Zep C and F remain `ERROR` because "
             "episode ingestion did not settle within the configured 300-second "
-            "timeout; A, D, H, I, and L are `NOT_REPRESENTABLE`. Its counter-derived "
-            "metrics are therefore N/A.",
+            "timeout. The separate empirical L run completed 100 trials with "
+            "secret retention observed in 0/100 trials.",
             END_MARKER,
         ]
     )
@@ -200,11 +248,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--llmbasedos-evidence", required=True, type=Path)
     parser.add_argument("--competitor-evidence", required=True, type=Path)
+    parser.add_argument("--zep-l-evidence", required=True, type=Path)
     parser.add_argument("--write-document", action="append", default=[], type=Path)
     parser.add_argument("--check-document", action="append", default=[], type=Path)
     args = parser.parse_args()
     section = render_results_section(
-        args.llmbasedos_evidence.resolve(), args.competitor_evidence.resolve()
+        args.llmbasedos_evidence.resolve(),
+        args.competitor_evidence.resolve(),
+        args.zep_l_evidence.resolve(),
     )
     for path in args.write_document:
         current = path.read_text(encoding="utf-8")
