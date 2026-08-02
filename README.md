@@ -274,7 +274,7 @@ Publication is allowed only when all of these hold:
 
 Attacks B, E, G, J, and K; recall quality and latency; systems beyond these four;
 a hosted leaderboard; provider CI matrices; and any Memory Kernel feature work.
-The Kernel target stays frozen at v0.4-rc1 until publication.
+The Kernel target stays frozen at v0.4-rc1 for v1 of this benchmark.
 
 ## Definition of done
 
