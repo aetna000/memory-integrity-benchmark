@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.coverage
+.pytest_cache/
+results/*
+!results/.gitkeep
+!results/published/
+results/published/*
+!results/published/.gitkeep
+!results/published/final-v4/
+!results/published/final-v4/**

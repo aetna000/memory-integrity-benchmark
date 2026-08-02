@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://memory-integrity-benchmark.invalid/schemas/trial.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "system", "system_version", "attack_id", "trial_n", "seed", "inputs", "observed_outputs", "assertions", "counter_delta", "status", "duration_ms"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "system": {"type": "string"},
+    "system_version": {"type": "string"},
+    "attack_id": {"enum": ["A", "C", "D", "F", "H", "I", "L"]},
+    "trial_n": {"type": "integer", "minimum": 1},
+    "seed": {"type": "integer"},
+    "inputs": {"type": "object"},
+    "observed_outputs": {"type": "object"},
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "expected", "actual", "pass"],
+        "properties": {
+          "kind": {"type": "string"},
+          "expected": {},
+          "actual": {},
+          "pass": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "counter_delta": {"type": "object"},
+    "status": {"enum": ["PASS", "FAIL", "PARTIAL", "NOT_REPRESENTABLE", "NOT_SUPPORTED", "ERROR"]},
+    "duration_ms": {"type": "integer", "minimum": 0},
+    "error": {"type": "object"},
+    "missing_capabilities": {"type": "array", "items": {"type": "string"}}
+  }
+}

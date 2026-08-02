@@ -1,0 +1,21 @@
+{
+  "reviewed_at": "2026-08-01",
+  "sources": {
+    "letta": [
+      "https://docs.letta.com/api/python",
+      "https://docs.letta.com/api/python/resources/agents/methods/create",
+      "https://docs.letta.com/api/python/resources/agents/subresources/messages/methods/create",
+      "https://docs.letta.com/api/python/resources/messages"
+    ],
+    "mem0": [
+      "https://docs.mem0.ai/core-concepts/memory-operations/add",
+      "https://docs.mem0.ai/core-concepts/memory-operations/search",
+      "https://docs.mem0.ai/core-concepts/memory-operations/delete"
+    ],
+    "zep": [
+      "https://help.getzep.com/v3/sdk-reference/thread/start-a-new-thread",
+      "https://help.getzep.com/v3/adding-messages",
+      "https://help.getzep.com/searching-the-graph"
+    ]
+  }
+}

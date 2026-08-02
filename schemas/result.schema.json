@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://memory-integrity-benchmark.invalid/schemas/result.schema.json",
+  "type": "object",
+  "required": ["run_id", "systems", "attacks", "results", "metrics"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "systems": {"type": "array", "items": {"type": "string"}},
+    "attacks": {"type": "array", "items": {"type": "string"}},
+    "results": {"type": "array", "items": {"type": "object"}},
+    "metrics": {"type": "object"}
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://memory-integrity-benchmark.invalid/schemas/attack.schema.json",
+  "title": "Declarative memory attack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "category", "description", "requires_capabilities", "setup", "steps", "probes", "assertions", "trials", "variation"],
+  "properties": {
+    "id": {"enum": ["A", "C", "D", "F", "H", "I", "L"]},
+    "name": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "category": {"enum": ["trust_laundering", "factual_contamination", "positive_control", "secret_retention"]},
+    "description": {"type": "string", "minLength": 1},
+    "requires_capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["source_trust", "derivation_tracking", "procedural_memory", "authority_gating", "purpose_scoped_recall", "secret_blocking"]}
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspace"],
+      "properties": {"workspace": {"type": "string", "minLength": 1}}
+    },
+    "steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/action"}},
+    "probes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/action"}},
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kind", "target"],
+        "properties": {
+          "kind": {"enum": ["taint_preserved", "not_in_authoritative_recall", "no_active_procedure", "authorised_procedure_active", "secret_not_retained"]},
+          "target": {"type": "string"},
+          "probe": {"type": "integer", "minimum": 1},
+          "before": {"type": "string"},
+          "parent_targets": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "trials": {"type": "integer", "minimum": 1},
+    "variation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seeded"],
+      "properties": {
+        "seeded": {"const": true},
+        "vary": {"type": "array", "uniqueItems": true, "items": {"enum": ["principal", "wording", "ordering"]}}
+      }
+    }
+  },
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {"enum": ["ingest", "derive_summary", "recall", "list_active_procedures", "propose_procedure", "approve_procedure", "record_outcome", "scan_secret"]},
+        "content": {"type": "string"},
+        "source_meta": {"type": "object"},
+        "from_steps": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+        "target": {"type": "string"},
+        "proposal": {"type": "string"},
+        "principal": {"type": "object"},
+        "kind": {"type": "string"},
+        "contribution": {"type": "number", "minimum": -1, "maximum": 1},
+        "query": {"type": "string"},
+        "purpose": {"enum": ["factual_recall", "conversational", "procedure_execution"]},
+        "secret": {"type": "string"},
+        "repeat": {"type": "integer", "minimum": 1, "maximum": 100}
+      },
+      "additionalProperties": false
+    }
+  }
+}

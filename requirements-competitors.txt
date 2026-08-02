@@ -1,0 +1,6 @@
+# Optional, exact SDK versions selected for the first comparative run.
+# The final evidence environment.lock must additionally pin their transitive graph.
+mem0ai==2.0.14
+zep-cloud==3.25.0
+letta-client==1.12.1
+python-dotenv==1.2.2

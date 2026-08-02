@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memory-integrity-benchmark"
+version = "1.0.0rc1"
+description = "Reproducible persistent-memory poisoning benchmark"
+requires-python = ">=3.11"
+dependencies = ["PyYAML>=6.0.2,<7", "jsonschema>=4.19.2,<5", "python-dotenv>=1.2.2,<2"]
+
+[project.optional-dependencies]
+competitors = ["mem0ai==2.0.14", "zep-cloud==3.25.0", "letta-client==1.12.1"]
+
+[tool.setuptools.packages.find]
+include = ["adapters*", "runner*"]
