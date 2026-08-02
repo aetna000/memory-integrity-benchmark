@@ -1,0 +1,781 @@
+{
+  "aggregate_metrics_expected_byte_identical": true,
+  "base_archive": "competitors-full-seed-20260801-final-v3.tar.gz",
+  "base_archive_sha256": "286bcaf0c52c4127ee119ffd5ca56062ac4239ab7bc3675a10cbf0201d17e2d7",
+  "base_package": "competitors-full-seed-20260801-final-v3",
+  "comparison_table_expected_byte_identical": true,
+  "derived_metadata_files_regenerated": [
+    "PACKAGE-DIFF.json",
+    "SHA256SUMS",
+    "benchmark-manifest.json"
+  ],
+  "modified_evidence_file_count": 201,
+  "modified_evidence_files": [
+    "raw-trials.jsonl",
+    "failures/zep-C-0001.json",
+    "failures/zep-C-0002.json",
+    "failures/zep-C-0003.json",
+    "failures/zep-C-0004.json",
+    "failures/zep-C-0005.json",
+    "failures/zep-C-0006.json",
+    "failures/zep-C-0007.json",
+    "failures/zep-C-0008.json",
+    "failures/zep-C-0009.json",
+    "failures/zep-C-0010.json",
+    "failures/zep-C-0011.json",
+    "failures/zep-C-0012.json",
+    "failures/zep-C-0013.json",
+    "failures/zep-C-0014.json",
+    "failures/zep-C-0015.json",
+    "failures/zep-C-0016.json",
+    "failures/zep-C-0017.json",
+    "failures/zep-C-0018.json",
+    "failures/zep-C-0019.json",
+    "failures/zep-C-0020.json",
+    "failures/zep-C-0021.json",
+    "failures/zep-C-0022.json",
+    "failures/zep-C-0023.json",
+    "failures/zep-C-0024.json",
+    "failures/zep-C-0025.json",
+    "failures/zep-C-0026.json",
+    "failures/zep-C-0027.json",
+    "failures/zep-C-0028.json",
+    "failures/zep-C-0029.json",
+    "failures/zep-C-0030.json",
+    "failures/zep-C-0031.json",
+    "failures/zep-C-0032.json",
+    "failures/zep-C-0033.json",
+    "failures/zep-C-0034.json",
+    "failures/zep-C-0035.json",
+    "failures/zep-C-0036.json",
+    "failures/zep-C-0037.json",
+    "failures/zep-C-0038.json",
+    "failures/zep-C-0039.json",
+    "failures/zep-C-0040.json",
+    "failures/zep-C-0041.json",
+    "failures/zep-C-0042.json",
+    "failures/zep-C-0043.json",
+    "failures/zep-C-0044.json",
+    "failures/zep-C-0045.json",
+    "failures/zep-C-0046.json",
+    "failures/zep-C-0047.json",
+    "failures/zep-C-0048.json",
+    "failures/zep-C-0049.json",
+    "failures/zep-C-0050.json",
+    "failures/zep-C-0051.json",
+    "failures/zep-C-0052.json",
+    "failures/zep-C-0053.json",
+    "failures/zep-C-0054.json",
+    "failures/zep-C-0055.json",
+    "failures/zep-C-0056.json",
+    "failures/zep-C-0057.json",
+    "failures/zep-C-0058.json",
+    "failures/zep-C-0059.json",
+    "failures/zep-C-0060.json",
+    "failures/zep-C-0061.json",
+    "failures/zep-C-0062.json",
+    "failures/zep-C-0063.json",
+    "failures/zep-C-0064.json",
+    "failures/zep-C-0065.json",
+    "failures/zep-C-0066.json",
+    "failures/zep-C-0067.json",
+    "failures/zep-C-0068.json",
+    "failures/zep-C-0069.json",
+    "failures/zep-C-0070.json",
+    "failures/zep-C-0071.json",
+    "failures/zep-C-0072.json",
+    "failures/zep-C-0073.json",
+    "failures/zep-C-0074.json",
+    "failures/zep-C-0075.json",
+    "failures/zep-C-0076.json",
+    "failures/zep-C-0077.json",
+    "failures/zep-C-0078.json",
+    "failures/zep-C-0079.json",
+    "failures/zep-C-0080.json",
+    "failures/zep-C-0081.json",
+    "failures/zep-C-0082.json",
+    "failures/zep-C-0083.json",
+    "failures/zep-C-0084.json",
+    "failures/zep-C-0085.json",
+    "failures/zep-C-0086.json",
+    "failures/zep-C-0087.json",
+    "failures/zep-C-0088.json",
+    "failures/zep-C-0089.json",
+    "failures/zep-C-0090.json",
+    "failures/zep-C-0091.json",
+    "failures/zep-C-0092.json",
+    "failures/zep-C-0093.json",
+    "failures/zep-C-0094.json",
+    "failures/zep-C-0095.json",
+    "failures/zep-C-0096.json",
+    "failures/zep-C-0097.json",
+    "failures/zep-C-0098.json",
+    "failures/zep-C-0099.json",
+    "failures/zep-C-0100.json",
+    "failures/zep-F-0001.json",
+    "failures/zep-F-0002.json",
+    "failures/zep-F-0003.json",
+    "failures/zep-F-0004.json",
+    "failures/zep-F-0005.json",
+    "failures/zep-F-0006.json",
+    "failures/zep-F-0007.json",
+    "failures/zep-F-0008.json",
+    "failures/zep-F-0009.json",
+    "failures/zep-F-0010.json",
+    "failures/zep-F-0011.json",
+    "failures/zep-F-0012.json",
+    "failures/zep-F-0013.json",
+    "failures/zep-F-0014.json",
+    "failures/zep-F-0015.json",
+    "failures/zep-F-0016.json",
+    "failures/zep-F-0017.json",
+    "failures/zep-F-0018.json",
+    "failures/zep-F-0019.json",
+    "failures/zep-F-0020.json",
+    "failures/zep-F-0021.json",
+    "failures/zep-F-0022.json",
+    "failures/zep-F-0023.json",
+    "failures/zep-F-0024.json",
+    "failures/zep-F-0025.json",
+    "failures/zep-F-0026.json",
+    "failures/zep-F-0027.json",
+    "failures/zep-F-0028.json",
+    "failures/zep-F-0029.json",
+    "failures/zep-F-0030.json",
+    "failures/zep-F-0031.json",
+    "failures/zep-F-0032.json",
+    "failures/zep-F-0033.json",
+    "failures/zep-F-0034.json",
+    "failures/zep-F-0035.json",
+    "failures/zep-F-0036.json",
+    "failures/zep-F-0037.json",
+    "failures/zep-F-0038.json",
+    "failures/zep-F-0039.json",
+    "failures/zep-F-0040.json",
+    "failures/zep-F-0041.json",
+    "failures/zep-F-0042.json",
+    "failures/zep-F-0043.json",
+    "failures/zep-F-0044.json",
+    "failures/zep-F-0045.json",
+    "failures/zep-F-0046.json",
+    "failures/zep-F-0047.json",
+    "failures/zep-F-0048.json",
+    "failures/zep-F-0049.json",
+    "failures/zep-F-0050.json",
+    "failures/zep-F-0051.json",
+    "failures/zep-F-0052.json",
+    "failures/zep-F-0053.json",
+    "failures/zep-F-0054.json",
+    "failures/zep-F-0055.json",
+    "failures/zep-F-0056.json",
+    "failures/zep-F-0057.json",
+    "failures/zep-F-0058.json",
+    "failures/zep-F-0059.json",
+    "failures/zep-F-0060.json",
+    "failures/zep-F-0061.json",
+    "failures/zep-F-0062.json",
+    "failures/zep-F-0063.json",
+    "failures/zep-F-0064.json",
+    "failures/zep-F-0065.json",
+    "failures/zep-F-0066.json",
+    "failures/zep-F-0067.json",
+    "failures/zep-F-0068.json",
+    "failures/zep-F-0069.json",
+    "failures/zep-F-0070.json",
+    "failures/zep-F-0071.json",
+    "failures/zep-F-0072.json",
+    "failures/zep-F-0073.json",
+    "failures/zep-F-0074.json",
+    "failures/zep-F-0075.json",
+    "failures/zep-F-0076.json",
+    "failures/zep-F-0077.json",
+    "failures/zep-F-0078.json",
+    "failures/zep-F-0079.json",
+    "failures/zep-F-0080.json",
+    "failures/zep-F-0081.json",
+    "failures/zep-F-0082.json",
+    "failures/zep-F-0083.json",
+    "failures/zep-F-0084.json",
+    "failures/zep-F-0085.json",
+    "failures/zep-F-0086.json",
+    "failures/zep-F-0087.json",
+    "failures/zep-F-0088.json",
+    "failures/zep-F-0089.json",
+    "failures/zep-F-0090.json",
+    "failures/zep-F-0091.json",
+    "failures/zep-F-0092.json",
+    "failures/zep-F-0093.json",
+    "failures/zep-F-0094.json",
+    "failures/zep-F-0095.json",
+    "failures/zep-F-0096.json",
+    "failures/zep-F-0097.json",
+    "failures/zep-F-0098.json",
+    "failures/zep-F-0099.json",
+    "failures/zep-F-0100.json"
+  ],
+  "new_package": "competitors-full-seed-20260801-final-v4",
+  "non_path_evidence_changes": [],
+  "path_substitution_count": 1600,
+  "path_substitutions": [
+    {
+      "failure_file_occurrences": 200,
+      "from": "<absolute-workspace-root>/adapters/zep_adapter.py",
+      "raw_trials_occurrences": 200,
+      "to": "adapters/zep_adapter.py",
+      "total_occurrences": 400
+    },
+    {
+      "failure_file_occurrences": 600,
+      "from": "<absolute-workspace-root>/runner/run.py",
+      "raw_trials_occurrences": 600,
+      "to": "runner/run.py",
+      "total_occurrences": 1200
+    }
+  ],
+  "transformation": "absolute_workspace_path_relativization_only",
+  "trial_integrity": {
+    "base_record_count": 2100,
+    "cell_statuses_after": {
+      "letta:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "letta:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "letta:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "zep:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:C": {
+        "assertion_counts": {},
+        "status": "ERROR",
+        "trial_status_counts": {
+          "ERROR": 100
+        },
+        "trials": 100
+      },
+      "zep:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:F": {
+        "assertion_counts": {},
+        "status": "ERROR",
+        "trial_status_counts": {
+          "ERROR": 100
+        },
+        "trials": 100
+      },
+      "zep:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:L": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      }
+    },
+    "cell_statuses_before": {
+      "letta:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "letta:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "letta:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "letta:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "mem0:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "mem0:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "zep:A": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:C": {
+        "assertion_counts": {},
+        "status": "ERROR",
+        "trial_status_counts": {
+          "ERROR": 100
+        },
+        "trials": 100
+      },
+      "zep:D": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:F": {
+        "assertion_counts": {},
+        "status": "ERROR",
+        "trial_status_counts": {
+          "ERROR": 100
+        },
+        "trials": 100
+      },
+      "zep:H": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:I": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      },
+      "zep:L": {
+        "assertion_counts": {},
+        "status": "NOT_REPRESENTABLE",
+        "trial_status_counts": {
+          "NOT_REPRESENTABLE": 100
+        },
+        "trials": 100
+      }
+    },
+    "cell_statuses_equal": true,
+    "metric_counters_after": {
+      "letta": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 200,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 100,
+          "value": 0.0
+        }
+      },
+      "mem0": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 200,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 100,
+          "value": 0.0
+        }
+      },
+      "zep": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 0,
+          "value": null
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 0,
+          "value": null
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 0,
+          "value": null
+        }
+      }
+    },
+    "metric_counters_before": {
+      "letta": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 200,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 100,
+          "value": 0.0
+        }
+      },
+      "mem0": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 200,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 100,
+          "value": 0.0
+        }
+      },
+      "zep": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 0,
+          "value": null
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 0,
+          "value": null
+        },
+        "taint_preservation_rate": {
+          "preserved": 0,
+          "total_derivations": 0,
+          "value": null
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 0,
+          "value": null
+        }
+      }
+    },
+    "metric_counters_equal": true,
+    "new_record_count": 2100,
+    "per_trial_counter_deltas_equal": true,
+    "same_trial_keys": true
+  },
+  "trials_reexecuted": 0
+}

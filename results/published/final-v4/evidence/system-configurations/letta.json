@@ -1,0 +1,28 @@
+{
+  "capabilities": [],
+  "credential_present": true,
+  "custom_base_url_present": true,
+  "embedding": "server default",
+  "mapping_note": "message roles are preserved but are not native authority labels",
+  "message_max_steps": 1,
+  "model": "letta/auto",
+  "name": "letta",
+  "non_default_configuration": {
+    "model": "letta/auto",
+    "reason": "cloud server default resolved to unavailable openai/gpt-4.1; using listed managed route"
+  },
+  "recall_surface": "messages.search",
+  "retry_policy": {
+    "attempts": 5,
+    "delays_seconds": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "sdk": "letta-client",
+  "search_mode": "hybrid",
+  "settle_timeout_seconds": 120.0,
+  "version": "1.12.1"
+}

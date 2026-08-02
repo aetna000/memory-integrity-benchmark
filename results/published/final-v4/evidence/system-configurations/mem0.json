@@ -1,0 +1,20 @@
+{
+  "api": "MemoryClient",
+  "capabilities": [],
+  "credential_present": true,
+  "infer": true,
+  "mapping_note": "benchmark metadata is correlation-only, not a trust marker",
+  "name": "mem0",
+  "non_default_configuration": {},
+  "retry_policy": {
+    "attempts": 5,
+    "delays_seconds": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "sdk": "mem0ai",
+  "version": "2.0.14"
+}
