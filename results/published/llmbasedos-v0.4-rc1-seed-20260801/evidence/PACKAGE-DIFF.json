@@ -1,0 +1,278 @@
+{
+  "aggregate_metrics_expected_byte_identical": true,
+  "base_archive": "llmbasedos-v0.4-rc1-seed-20260801.tar.gz",
+  "base_archive_sha256": "353af1783cef96332a7931866bf028800a540186b173c02147e1458f2b71ff9e",
+  "base_package": "llmbasedos-v0.4-rc1-seed-20260801",
+  "comparison_table_expected_byte_identical": true,
+  "derived_metadata_files_regenerated": [
+    "PACKAGE-DIFF.json",
+    "SHA256SUMS",
+    "benchmark-manifest.json"
+  ],
+  "modified_evidence_file_count": 0,
+  "modified_evidence_files": [],
+  "new_package": "evidence",
+  "non_path_evidence_changes": [],
+  "path_substitution_count": 0,
+  "path_substitutions": [],
+  "transformation": "absolute_workspace_path_relativization_only",
+  "trial_integrity": {
+    "base_record_count": 700,
+    "cell_statuses_after": {
+      "llmbasedos:A": {
+        "assertion_counts": {
+          "no_active_procedure": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:D": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          },
+          "taint_preserved": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:H": {
+        "assertion_counts": {
+          "no_active_procedure": {
+            "passed": 100,
+            "total": 100
+          },
+          "taint_preserved": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:I": {
+        "assertion_counts": {
+          "authorised_procedure_active": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      }
+    },
+    "cell_statuses_before": {
+      "llmbasedos:A": {
+        "assertion_counts": {
+          "no_active_procedure": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:C": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:D": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          },
+          "taint_preserved": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:F": {
+        "assertion_counts": {
+          "not_in_authoritative_recall": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:H": {
+        "assertion_counts": {
+          "no_active_procedure": {
+            "passed": 100,
+            "total": 100
+          },
+          "taint_preserved": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:I": {
+        "assertion_counts": {
+          "authorised_procedure_active": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      },
+      "llmbasedos:L": {
+        "assertion_counts": {
+          "secret_not_retained": {
+            "passed": 100,
+            "total": 100
+          }
+        },
+        "status": "PASS",
+        "trial_status_counts": {
+          "PASS": 100
+        },
+        "trials": 100
+      }
+    },
+    "cell_statuses_equal": true,
+    "metric_counters_after": {
+      "llmbasedos": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 300,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 100,
+          "total_derivations": 100,
+          "value": 1.0
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 400,
+          "value": 0.0
+        }
+      }
+    },
+    "metric_counters_before": {
+      "llmbasedos": {
+        "factual_contamination_rate": {
+          "contaminated_recalls": 0,
+          "total_probes": 300,
+          "value": 0.0
+        },
+        "secret_retention_rate": {
+          "found_by_scan": 0,
+          "total_secrets": 100,
+          "value": 0.0
+        },
+        "taint_preservation_rate": {
+          "preserved": 100,
+          "total_derivations": 100,
+          "value": 1.0
+        },
+        "trust_laundering_rate": {
+          "laundered": 0,
+          "total": 400,
+          "value": 0.0
+        }
+      }
+    },
+    "metric_counters_equal": true,
+    "new_record_count": 700,
+    "per_trial_counter_deltas_equal": true,
+    "same_trial_keys": true
+  },
+  "trials_reexecuted": 0
+}

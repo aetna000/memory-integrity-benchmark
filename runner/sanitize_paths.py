@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from runner.report import aggregate, read_trials, report
+from runner.report import aggregate, read_trials, write_checksums
 
 
 def sha256(path: Path) -> str:
@@ -136,6 +136,7 @@ def sanitize_package(
     manifest.update(
         {
             "package_version": package_version,
+            "record_count": len(new_records),
             "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "base_package": {
                 "directory": base_dir.name,
@@ -206,7 +207,15 @@ def sanitize_package(
         encoding="utf-8",
     )
 
-    report(output_dir)
+    persisted_aggregate = json.loads(
+        (output_dir / "aggregate-metrics.json").read_text(encoding="utf-8")
+    )
+    expected_aggregate = dict(new_result)
+    if not expected_aggregate.get("metric_exclusions"):
+        expected_aggregate.pop("metric_exclusions", None)
+    if persisted_aggregate != expected_aggregate:
+        raise AssertionError("persisted aggregate metrics do not match raw trial counters")
+    write_checksums(output_dir)
     if (base_dir / "aggregate-metrics.json").read_bytes() != (
         output_dir / "aggregate-metrics.json"
     ).read_bytes():
@@ -222,8 +231,13 @@ def sanitize_package(
         "benchmark-manifest.json",
     }
     output_files = file_inventory(output_dir)
-    if set(base_files) != set(output_files):
-        raise AssertionError("the package file set changed")
+    expected_output_files = set(base_files) | {"PACKAGE-DIFF.json"}
+    if set(output_files) != expected_output_files:
+        added = sorted(set(output_files) - set(base_files))
+        removed = sorted(set(base_files) - set(output_files))
+        raise AssertionError(
+            f"unexpected package file-set change: added={added}, removed={removed}"
+        )
     unexpected_changes = sorted(
         path
         for path in base_files

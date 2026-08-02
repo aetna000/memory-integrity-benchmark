@@ -11,3 +11,5 @@ results/published/*
 !results/published/.gitkeep
 !results/published/final-v4/
 !results/published/final-v4/**
+!results/published/llmbasedos-v0.4-rc1-seed-20260801/
+!results/published/llmbasedos-v0.4-rc1-seed-20260801/**

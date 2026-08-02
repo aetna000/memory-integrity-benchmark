@@ -1,0 +1,47 @@
+{
+  "adapter_targets": {
+    "llmbasedos": {
+      "adapter_version": "v0.4-rc1@54a1dda4c896c2e7697c4849e1025d726bb29519",
+      "target_commit": "54a1dda4c896c2e7697c4849e1025d726bb29519"
+    }
+  },
+  "attacks": [
+    "A",
+    "C",
+    "D",
+    "F",
+    "H",
+    "I",
+    "L"
+  ],
+  "base_package": {
+    "archive": "llmbasedos-v0.4-rc1-seed-20260801.tar.gz",
+    "archive_sha256": "353af1783cef96332a7931866bf028800a540186b173c02147e1458f2b71ff9e",
+    "directory": "llmbasedos-v0.4-rc1-seed-20260801",
+    "manifest_sha256": "27d693f581e6fc94bf797c5a5d26a984e8dc4d6b2d1521dda0a9cb094f599524",
+    "raw_trials_sha256": "7c756cde74bf16eae885693b2c73a3f2ea0f3c8a4467f44210eecc99919164c1"
+  },
+  "command_contract": "python3 -m runner.run --systems <...> --attacks <...> --trials-from-yaml --seed <s>",
+  "created_at": "2026-08-02T17:31:58+00:00",
+  "environment": {
+    "implementation": "CPython",
+    "platform": "Linux-6.14.0-37-generic-x86_64-with-glibc2.41",
+    "python": "3.13.3"
+  },
+  "harness_commit": "dd2adfdb0e88a631f41c22483563539b622fd53e",
+  "harness_worktree_dirty_at_run": false,
+  "narrative_generated_by_agent": false,
+  "package_version": "publication-llmbasedos-v0.4-rc1-relative-paths",
+  "publication_sanitization": {
+    "kind": "absolute_workspace_path_relativization_only",
+    "modified_evidence_file_count": 0,
+    "replacement_count": 0,
+    "trials_reexecuted": 0
+  },
+  "record_count": 700,
+  "run_id": "llmbasedos-v0.4-rc1-seed-20260801",
+  "seed": 20260801,
+  "systems": [
+    "llmbasedos"
+  ]
+}

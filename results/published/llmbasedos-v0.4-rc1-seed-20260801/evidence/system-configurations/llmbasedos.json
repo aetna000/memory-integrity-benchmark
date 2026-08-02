@@ -1,0 +1,16 @@
+{
+  "capabilities": [
+    "authority_gating",
+    "derivation_tracking",
+    "procedural_memory",
+    "purpose_scoped_recall",
+    "secret_blocking",
+    "source_trust"
+  ],
+  "integrity_mode": "enforce",
+  "name": "llmbasedos",
+  "source_loading": "git archive of target commit; working tree excluded",
+  "target_commit": "54a1dda4c896c2e7697c4849e1025d726bb29519",
+  "target_tag": "v0.4-rc1",
+  "version": "v0.4-rc1@54a1dda4c896c2e7697c4849e1025d726bb29519"
+}

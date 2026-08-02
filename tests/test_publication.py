@@ -4,10 +4,23 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runner.sanitize_paths import replace_workspace_prefix
+from runner.sanitize_paths import file_inventory, replace_workspace_prefix
 
 
 class PublicationSanitizationTests(unittest.TestCase):
+    def test_inventory_allows_package_diff_as_derived_publication_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "raw-trials.jsonl").write_text("{}\n", encoding="utf-8")
+            base_files = file_inventory(root)
+            (root / "PACKAGE-DIFF.json").write_text("{}\n", encoding="utf-8")
+            output_files = file_inventory(root)
+
+            self.assertEqual(
+                set(output_files),
+                set(base_files) | {"PACKAGE-DIFF.json"},
+            )
+
     def test_workspace_prefix_is_removed_without_changing_relative_suffixes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "evidence.json"
