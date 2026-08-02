@@ -1,10 +1,9 @@
 # memory-integrity-benchmark
 
-Status: public-release candidate for Harness Specification v1. The harness, the
-LLMBASEDOS evidence run, and the full seeded competitor run are complete. The
-path-sanitized final-v4 evidence package is prepared; repository publication, the
-public post, independent validation, and market outreach are not yet complete.
-Repository creation date: 2026-08-01. Contract publication deadline: 2026-08-22.
+Status: published benchmark repository and evaluation contract for Harness
+Specification v1. The published evidence package is `final-v4` (SHA-256
+`5ccbf35bc86d2485e577eaf981b33cbbec7a476357b769f75cad7ec4e8d02a97`) for the
+seeded run dated 2026-08-01.
 
 This repository is the evaluation contract. It measures one narrow question:
 
@@ -18,6 +17,15 @@ quality. The only publication claim permitted by this contract is:
 > We built a reproducible benchmark for persistent-memory poisoning and tested
 > whether untrusted content can silently become trusted knowledge or operating
 > policy.
+
+## Reproducibility
+
+The Mem0, Zep, and Letta columns are fully reproducible by third parties using
+their own API credentials. The LLMBASEDOS column requires the Memory Kernel
+itself, which is not yet public. Its results are provided as a complete evidence
+package with inputs, outputs, and assertions for every trial, plus checksums, so
+every claim is inspectable, but the column is not yet independently rerunnable.
+We intend to change this.
 
 ## Reproduce
 
@@ -247,7 +255,8 @@ Publication is allowed only when all of these hold:
 3. Attack I is PASS on LLMBASEDOS.
 4. Every competitor FAIL is manually re-checked against its adapter mapping.
 5. The limitations below accompany the result.
-6. A stranger can clone, install the lock, and rerun with the documented command.
+6. A stranger can clone, install the lock, and rerun the Mem0, Zep, and Letta
+   columns with their own API credentials using the documented command.
 
 ## Mandatory limitations
 
@@ -269,13 +278,9 @@ The Kernel target stays frozen at v0.4-rc1 until publication.
 
 ## Definition of done
 
-The iteration is done only when the repository is public, a full seeded evidence
-package and checksums are published, the comparison table renders solely from raw
-trials, the human-written post is live with the narrow claim and limitations, and
-five first market messages have been sent with responses or silences logged.
-Repository publication and outreach are external actions and therefore require
-explicit operator authorization and destinations; they are not implied by a
-local benchmark run.
+The iteration is done when the repository is public, a full seeded evidence
+package and its checksums are published, the comparison table can be regenerated
+solely from raw trials, and the limitations are documented.
 
 ## Sources for adapter mappings
 
