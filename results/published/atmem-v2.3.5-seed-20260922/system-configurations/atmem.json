@@ -1,0 +1,17 @@
+{
+  "authority_limitation": "2.3.5 has typed review but no public principal-authorized review decision",
+  "capabilities": [
+    "procedural_memory",
+    "source_trust"
+  ],
+  "derivation_limitation": "2.3.5 does not persist mixed-parent taint for new summaries",
+  "distribution": "atmem",
+  "distribution_location": "installed-site-packages",
+  "name": "atmem",
+  "secret_limitation": "quarantined secret content remains in canonical records",
+  "source_loading": "installed distribution; editable installs rejected",
+  "target_version": "2.3.5",
+  "version": "2.3.5",
+  "wheel_filename": "atmem-2.3.5-py3-none-any.whl",
+  "wheel_sha256": "16e6fc5cf7a7f6964ce40ceffb124c7b386c08472ae5b027b8635a378ec62269"
+}
