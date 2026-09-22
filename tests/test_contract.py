@@ -25,10 +25,16 @@ from runner.run import (
     counter_delta,
     evaluate_assertion,
     run,
+    SYSTEM_CAPABILITIES,
+    SYSTEM_ORDER,
 )
 
 
 class DeclarativeContractTests(unittest.TestCase):
+    def test_atmem_is_registered_without_changing_existing_order(self) -> None:
+        self.assertEqual(SYSTEM_ORDER, ["llmbasedos", "atmem", "mem0", "zep", "letta"])
+        self.assertEqual(SYSTEM_CAPABILITIES["atmem"], {"source_trust", "procedural_memory"})
+
     def test_all_seven_attacks_validate_and_are_code_free(self) -> None:
         attacks = load_attacks(ATTACK_ORDER)
         self.assertEqual([item["id"] for item in attacks], ATTACK_ORDER)
@@ -86,7 +92,7 @@ class DeclarativeContractTests(unittest.TestCase):
             "source_trust", "derivation_tracking", "procedural_memory",
             "authority_gating", "purpose_scoped_recall", "secret_blocking",
         }
-        for system in ("mem0", "zep", "letta"):
+        for system in ("atmem", "mem0", "zep", "letta"):
             content = (ROOT / "adapters" / system / "CAPABILITIES.md").read_text(encoding="utf-8")
             for capability in capabilities:
                 self.assertRegex(

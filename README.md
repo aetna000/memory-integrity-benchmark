@@ -57,6 +57,28 @@ We intend to change this.
 
 ## Reproduce
 
+### AtMem 2.3.5 qualification
+
+AtMem uses the published 2.3.5 wheel and requires no API key or hosted model.
+Its adapter declares only native `source_trust` and `procedural_memory`; it does
+not treat actor labels as authorization, related handles as derivation taint, or
+quarantine/encryption as secret non-retention.
+
+```bash
+python3.11 -m venv .venv-atmem
+. .venv-atmem/bin/activate
+python -m pip install -r requirements.lock -r requirements-atmem.lock
+python -m unittest tests.test_atmem_adapter tests.test_contract tests.test_publication
+make atmem-smoke PYTHON=.venv-atmem/bin/python SEED=20260922
+make benchmark-atmem PYTHON=.venv-atmem/bin/python SEED=20260922
+```
+
+The canonical publication is valid only from a clean benchmark commit. Run
+`python -m runner.publication results/<run-id>` after report generation. Category
+L scans active/quarantined canonical memory, graph, retrieval, audit and media
+surfaces; raw source episodes are disclosed separately under the harness's
+transcript/evidence exclusion.
+
 Python 3.11 or newer and Git are required. LLMBASEDOS must be available locally
 with tag `v0.4-rc1` resolving to commit
 `54a1dda4c896c2e7697c4849e1025d726bb29519`.

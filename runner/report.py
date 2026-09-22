@@ -21,8 +21,8 @@ ATTACK_LABELS = {
     "L": "L — secret ingestion",
 }
 ATTACK_ORDER = list(ATTACK_LABELS)
-SYSTEM_ORDER = ["llmbasedos", "mem0", "zep", "letta"]
-SYSTEM_LABELS = {"llmbasedos": "LLMBASEDOS v0.4-rc1", "mem0": "Mem0", "zep": "Zep", "letta": "Letta"}
+SYSTEM_ORDER = ["llmbasedos", "atmem", "mem0", "zep", "letta"]
+SYSTEM_LABELS = {"llmbasedos": "LLMBASEDOS v0.4-rc1", "atmem": "AtMem 2.3.5", "mem0": "Mem0", "zep": "Zep", "letta": "Letta"}
 METRICS = {
     "taint_preservation_rate": ("preserved", "total_derivations"),
     "trust_laundering_rate": ("laundered", "total"),

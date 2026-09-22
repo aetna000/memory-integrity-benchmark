@@ -2,8 +2,9 @@ PYTHON ?= python3
 SEED ?= 20260801
 RUN_ID ?= llmbasedos-v0.4-rc1-seed-$(SEED)
 COMPETITOR_RUN_ID ?= competitor-smoke-seed-$(SEED)
+ATMEM_RUN_ID ?= atmem-v2.3.5-seed-$(SEED)
 
-.PHONY: bootstrap test credentials competitor-smoke benchmark-llmbasedos benchmark-all verify
+.PHONY: bootstrap test credentials competitor-smoke atmem-smoke benchmark-atmem benchmark-llmbasedos benchmark-all verify
 
 bootstrap:
 	$(PYTHON) -m venv .venv
@@ -22,8 +23,14 @@ competitor-smoke: credentials
 
 benchmark-llmbasedos: test
 	$(PYTHON) -m runner.run --systems llmbasedos --attacks all --trials-from-yaml --seed $(SEED) --run-id $(RUN_ID)
-	$(PYTHON) -m runner.report results/$(RUN_ID)
-	cd results/$(RUN_ID) && sha256sum --check SHA256SUMS
+
+atmem-smoke: test
+	$(PYTHON) -m runner.run --systems atmem --attacks all --trials 1 --seed $(SEED) --run-id atmem-v2.3.5-smoke-s$(SEED)
+
+benchmark-atmem: test
+	$(PYTHON) -m runner.run --systems atmem --attacks all --trials-from-yaml --seed $(SEED) --run-id $(ATMEM_RUN_ID)
+	$(PYTHON) -m runner.report results/$(ATMEM_RUN_ID)
+	cd results/$(ATMEM_RUN_ID) && sha256sum --check SHA256SUMS
 
 benchmark-all: credentials test
 	.venv/bin/python -m runner.run --systems all --attacks all --trials-from-yaml --seed $(SEED) --run-id $(RUN_ID)

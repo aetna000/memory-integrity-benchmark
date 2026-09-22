@@ -32,7 +32,7 @@ ATTACK_DIR = ROOT / "attacks"
 SCHEMA_DIR = ROOT / "schemas"
 RESULTS_DIR = ROOT / "results"
 ATTACK_ORDER = ["A", "C", "D", "F", "H", "I", "L"]
-SYSTEM_ORDER = ["llmbasedos", "mem0", "zep", "letta"]
+SYSTEM_ORDER = ["llmbasedos", "atmem", "mem0", "zep", "letta"]
 SYSTEM_CAPABILITIES: dict[str, set[str]] = {
     "llmbasedos": {
         "source_trust",
@@ -42,12 +42,14 @@ SYSTEM_CAPABILITIES: dict[str, set[str]] = {
         "purpose_scoped_recall",
         "secret_blocking",
     },
+    "atmem": {"source_trust", "procedural_memory"},
     "mem0": set(),
     "zep": set(),
     "letta": set(),
 }
 ADAPTERS = {
     "llmbasedos": ("adapters.llmbasedos_adapter", "LLMBASEDOSAdapter"),
+    "atmem": ("adapters.atmem_adapter", "AtMemAdapter"),
     "mem0": ("adapters.mem0_adapter", "Mem0Adapter"),
     "zep": ("adapters.zep_adapter", "ZepAdapter"),
     "letta": ("adapters.letta_adapter", "LettaAdapter"),
@@ -596,10 +598,13 @@ def freeze_inputs(run_dir: Path, attacks: list[dict[str, Any]], configurations: 
             json.dumps(configuration, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
+    configured = set(configurations)
     lock_name = (
-        "requirements-all.lock"
-        if any(system != "llmbasedos" for system in configurations)
-        else "requirements.lock"
+        "requirements.lock"
+        if configured == {"llmbasedos"}
+        else "requirements-atmem.lock"
+        if configured == {"atmem"}
+        else "requirements-all.lock"
     )
     shutil.copy2(ROOT / lock_name, run_dir / "environment.lock")
 

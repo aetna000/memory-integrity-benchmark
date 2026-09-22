@@ -1,0 +1,17 @@
+{
+  "distribution": "atmem",
+  "version": "2.3.5",
+  "wheel": {
+    "filename": "atmem-2.3.5-py3-none-any.whl",
+    "sha256": "16e6fc5cf7a7f6964ce40ceffb124c7b386c08472ae5b027b8635a378ec62269",
+    "size": 725654,
+    "url": "https://files.pythonhosted.org/packages/e7/5b/15f013629fdbc0ef0712631a581f1af55e07dcc5134809df17a2fc0c26a0/atmem-2.3.5-py3-none-any.whl"
+  },
+  "capabilities": [
+    "procedural_memory",
+    "source_trust"
+  ],
+  "canonical_python": "3.11",
+  "network_required": false
+}
+
