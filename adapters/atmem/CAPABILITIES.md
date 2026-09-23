@@ -1,8 +1,11 @@
 # AtMem 2.3.6b1 capability review
 
-Target artifact: `atmem-2.3.6b1-py3-none-any.whl`. The canonical PyPI URL and
-SHA-256 remain pending until the tagged artifact is published; no canonical
-2.3.6b1 evidence may be generated before that pin is replaced.
+Target artifact: `atmem-2.3.6b1-py3-none-any.whl`, installed from the canonical
+[PyPI wheel](https://files.pythonhosted.org/packages/ee/c6/a2da1fa9e11ca5b04d4c3e0a46287b849fd24229c15c2320711d6e4149f6/atmem-2.3.6b1-py3-none-any.whl)
+with SHA-256
+`0d68baba36f2ae301cfa9fb407963e650d814c97958ebc618dd390208b25d063`.
+The adapter, frozen configuration, and environment lock require this exact
+artifact before canonical evidence can be generated.
 
 | Capability | Decision | Native evidence | Enforcement and limitation |
 |---|---|---|---|

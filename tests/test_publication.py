@@ -116,6 +116,10 @@ class PublicationSanitizationTests(unittest.TestCase):
             "secret": lambda root: (self._package(root), (root / "leak.txt").write_text("sk-proj-" + "A" * 48)),
             "path": lambda root: (self._package(root), (root / "leak.txt").write_text("/Users/example/private.db")),
             "checksum": lambda root: (self._package(root), (root / "benchmark-manifest.json").write_text("{}\n")),
+            "unlisted_file": lambda root: (
+                self._package(root),
+                (root / "LIMITATIONS.md").write_text("bounded claim\n", encoding="utf-8"),
+            ),
         }
         for name, mutate in mutations.items():
             with self.subTest(name=name), tempfile.TemporaryDirectory() as temporary:

@@ -108,11 +108,26 @@ def validate_publication(
     checksum_path = run_dir / "SHA256SUMS"
     if not checksum_path.exists():
         raise ValueError("SHA256SUMS is missing")
+    listed_files: set[str] = set()
     for line in checksum_path.read_text(encoding="utf-8").splitlines():
         digest, relative = line.split("  ", 1)
+        if relative in listed_files:
+            raise ValueError(f"duplicate checksum entry: {relative}")
+        listed_files.add(relative)
         candidate = run_dir / relative
         if not candidate.is_file() or hashlib.sha256(candidate.read_bytes()).hexdigest() != digest:
             raise ValueError(f"checksum mismatch: {relative}")
+    actual_files = {
+        path.relative_to(run_dir).as_posix()
+        for path in run_dir.rglob("*")
+        if path.is_file() and path.name != "SHA256SUMS"
+    }
+    if listed_files != actual_files:
+        missing = sorted(actual_files - listed_files)
+        unexpected = sorted(listed_files - actual_files)
+        raise ValueError(
+            f"checksum inventory mismatch: unlisted={missing}, missing_files={unexpected}"
+        )
     return {
         "valid": True,
         "run_id": manifest["run_id"],

@@ -2,7 +2,8 @@ PYTHON ?= python3
 SEED ?= 20260801
 RUN_ID ?= llmbasedos-v0.4-rc1-seed-$(SEED)
 COMPETITOR_RUN_ID ?= competitor-smoke-seed-$(SEED)
-ATMEM_RUN_ID ?= atmem-v2.3.5-seed-$(SEED)
+ATMEM_VERSION ?= 2.3.6b1
+ATMEM_RUN_ID ?= atmem-v$(ATMEM_VERSION)-seed-$(SEED)
 
 .PHONY: bootstrap test credentials competitor-smoke atmem-smoke benchmark-atmem benchmark-llmbasedos benchmark-all verify
 
@@ -25,7 +26,7 @@ benchmark-llmbasedos: test
 	$(PYTHON) -m runner.run --systems llmbasedos --attacks all --trials-from-yaml --seed $(SEED) --run-id $(RUN_ID)
 
 atmem-smoke: test
-	$(PYTHON) -m runner.run --systems atmem --attacks all --trials 1 --seed $(SEED) --run-id atmem-v2.3.5-smoke-s$(SEED)
+	$(PYTHON) -m runner.run --systems atmem --attacks all --trials 1 --seed $(SEED) --run-id atmem-v$(ATMEM_VERSION)-smoke-s$(SEED)
 
 benchmark-atmem: test
 	$(PYTHON) -m runner.run --systems atmem --attacks all --trials-from-yaml --seed $(SEED) --run-id $(ATMEM_RUN_ID)
