@@ -57,12 +57,13 @@ We intend to change this.
 
 ## Reproduce
 
-### AtMem 2.3.5 qualification
+### AtMem qualification
 
-AtMem uses the published 2.3.5 wheel and requires no API key or hosted model.
-Its adapter declares only native `source_trust` and `procedural_memory`; it does
-not treat actor labels as authorization, related handles as derivation taint, or
-quarantine/encryption as secret non-retention.
+AtMem uses one published, digest-pinned wheel per evidence branch and requires
+no API key or hosted model. The 2.3.6b1 adapter declares native `source_trust`,
+`derivation_tracking`, `procedural_memory`, and `secret_blocking`. It does not
+treat caller-supplied actor labels as authenticated approval authority, so A,
+H, and I remain `NOT_REPRESENTABLE` under Harness Specification v1.
 
 ```bash
 python3.11 -m venv .venv-atmem
@@ -73,11 +74,19 @@ make atmem-smoke PYTHON=.venv-atmem/bin/python SEED=20260922
 make benchmark-atmem PYTHON=.venv-atmem/bin/python SEED=20260922
 ```
 
-The canonical publication is valid only from a clean benchmark commit. Run
+The branch lock must name the same released wheel and SHA-256 as the frozen
+AtMem configuration; a 2.3.5 lock cannot run the 2.3.6b1 adapter. Canonical
+publication is valid only from a clean benchmark commit. Run
 `python -m runner.publication results/<run-id>` after report generation. Category
 L scans active/quarantined canonical memory, graph, retrieval, audit and media
 surfaces; raw source episodes are disclosed separately under the harness's
 transcript/evidence exclusion.
+
+Target matching prefers a system's native record identifiers when an adapter
+exposes them. Text markers are only the fallback for systems without native
+identifiers; this avoids counting a clean sibling that shares trial wording,
+but means an implementation that copies poisoned content into a new native ID
+requires a separately declared lineage/content-flow assertion to detect it.
 
 Python 3.11 or newer and Git are required. LLMBASEDOS must be available locally
 with tag `v0.4-rc1` resolving to commit

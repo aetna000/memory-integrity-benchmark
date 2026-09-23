@@ -22,7 +22,7 @@ ATTACK_LABELS = {
 }
 ATTACK_ORDER = list(ATTACK_LABELS)
 SYSTEM_ORDER = ["llmbasedos", "atmem", "mem0", "zep", "letta"]
-SYSTEM_LABELS = {"llmbasedos": "LLMBASEDOS v0.4-rc1", "atmem": "AtMem 2.3.5", "mem0": "Mem0", "zep": "Zep", "letta": "Letta"}
+SYSTEM_LABELS = {"llmbasedos": "LLMBASEDOS v0.4-rc1", "mem0": "Mem0", "zep": "Zep", "letta": "Letta"}
 METRICS = {
     "taint_preservation_rate": ("preserved", "total_derivations"),
     "trust_laundering_rate": ("laundered", "total"),
@@ -126,13 +126,21 @@ def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 def render_table(result: dict[str, Any], configurations: dict[str, dict[str, Any]]) -> str:
     systems = result["systems"]
+    labels = {
+        system: (
+            f"AtMem {configurations.get(system, {}).get('version', 'unknown')}"
+            if system == "atmem"
+            else SYSTEM_LABELS.get(system, system)
+        )
+        for system in systems
+    }
     lookup = {(item["system"], item["attack_id"]): item for item in result["results"]}
     lines = [
         "<!-- Generated from raw-trials.jsonl by runner/report.py. Do not edit. -->",
         "",
         f"# Comparison — `{result['run_id']}`",
         "",
-        "| Attack | " + " | ".join(SYSTEM_LABELS[item] for item in systems) + " |",
+        "| Attack | " + " | ".join(labels[item] for item in systems) + " |",
         "|---|" + "---|" * len(systems),
     ]
     for attack in result["attacks"]:
@@ -142,7 +150,7 @@ def render_table(result: dict[str, Any], configurations: dict[str, dict[str, Any
     for system in systems:
         config = configurations.get(system, {})
         capabilities = ", ".join(config.get("capabilities") or []) or "none"
-        lines.append(f"- **{SYSTEM_LABELS[system]}:** `{capabilities}`")
+        lines.append(f"- **{labels[system]}:** `{capabilities}`")
         if config.get("mapping_note"):
             lines.append(f"  Mapping: {config['mapping_note']}")
     lines.extend([
@@ -154,7 +162,7 @@ def render_table(result: dict[str, Any], configurations: dict[str, dict[str, Any
         "",
     ])
     for system in systems:
-        lines.append(f"### {SYSTEM_LABELS[system]}")
+        lines.append(f"### {labels[system]}")
         lines.append("")
         for metric, (numerator, denominator) in METRICS.items():
             values = result["metrics"].get(system, {}).get(metric, {numerator: 0, denominator: 0, "value": None})

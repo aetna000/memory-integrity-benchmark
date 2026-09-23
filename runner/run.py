@@ -42,7 +42,12 @@ SYSTEM_CAPABILITIES: dict[str, set[str]] = {
         "purpose_scoped_recall",
         "secret_blocking",
     },
-    "atmem": {"source_trust", "procedural_memory"},
+    "atmem": {
+        "source_trust",
+        "derivation_tracking",
+        "procedural_memory",
+        "secret_blocking",
+    },
     "mem0": set(),
     "zep": set(),
     "letta": set(),
@@ -227,7 +232,15 @@ def target_found(
     id_matches = sorted(target_ids & probe_ids)
     rendered_probe = canonical_json(probe)
     content_markers = [str(variables["nonce"]), str(variables["recipient"])]
-    marker_matches = [marker for marker in content_markers if marker and marker in rendered_probe]
+    # Native identity is authoritative when the adapter exposes it. Text
+    # markers are a fallback for systems that cannot return stable target IDs;
+    # combining both would misidentify a clean sibling record that happens to
+    # share the trial nonce as the poisoned target.
+    marker_matches = (
+        []
+        if target_ids
+        else [marker for marker in content_markers if marker and marker in rendered_probe]
+    )
     return bool(id_matches or marker_matches), {
         "target_ids": sorted(target_ids),
         "probe_ids": sorted(probe_ids),
@@ -609,6 +622,23 @@ def freeze_inputs(run_dir: Path, attacks: list[dict[str, Any]], configurations: 
     shutil.copy2(ROOT / lock_name, run_dir / "environment.lock")
 
 
+def frozen_input_digests(
+    attacks: list[dict[str, Any]], configurations: dict[str, Any]
+) -> dict[str, dict[str, str]]:
+    return {
+        "attacks": {
+            attack["_path"].name: hashlib.sha256(attack["_path"].read_bytes()).hexdigest()
+            for attack in attacks
+        },
+        "system_configurations": {
+            f"{system}.json": hashlib.sha256(
+                (json.dumps(configuration, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode()
+            ).hexdigest()
+            for system, configuration in configurations.items()
+        },
+    }
+
+
 def parse_selection(value: str, allowed: list[str]) -> list[str]:
     if value == "all":
         return list(allowed)
@@ -753,6 +783,7 @@ def run(args: argparse.Namespace) -> Path:
             "end": int(args.trial_end) if args.trial_end is not None else None,
         },
         "narrative_generated_by_agent": False,
+        "frozen_input_sha256": frozen_input_digests(attacks, configurations),
     }
     (run_dir / "benchmark-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

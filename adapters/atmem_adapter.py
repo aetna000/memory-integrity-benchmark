@@ -1,9 +1,8 @@
-"""AtMem 2.3.5 adapter for Harness Specification v1.
+"""AtMem 2.3.6b1 adapter for Harness Specification v1.
 
-The adapter intentionally declares only capabilities evidenced by the released
-wheel. It does not turn actor strings into authorization, related-record handles
-into derivation taint, quarantine/encryption into secret non-retention, or the
-harness ``purpose`` argument into native purpose enforcement.
+The adapter declares only controls implemented by the installed artifact. The
+harness ``purpose`` argument remains outside AtMem's native enforcement and is
+not declared as a capability.
 """
 
 from __future__ import annotations
@@ -20,9 +19,9 @@ from typing import Any
 from .base import AdapterUnavailable, MemorySystemAdapter, NotRepresentable, SecretScan
 
 
-PINNED_VERSION = "2.3.5"
-PINNED_WHEEL = "atmem-2.3.5-py3-none-any.whl"
-PINNED_WHEEL_SHA256 = "16e6fc5cf7a7f6964ce40ceffb124c7b386c08472ae5b027b8635a378ec62269"
+PINNED_VERSION = "2.3.6b1"
+PINNED_WHEEL = "atmem-2.3.6b1-py3-none-any.whl"
+PINNED_WHEEL_SHA256 = "PENDING_RELEASE_ARTIFACT"
 
 
 class AtMemAdapter(MemorySystemAdapter):
@@ -34,7 +33,7 @@ class AtMemAdapter(MemorySystemAdapter):
             installed = version("atmem")
             package = distribution("atmem")
         except PackageNotFoundError as error:
-            raise AdapterUnavailable("atmem==2.3.5 is not installed") from error
+            raise AdapterUnavailable(f"atmem=={PINNED_VERSION} is not installed") from error
         if installed != PINNED_VERSION:
             raise AdapterUnavailable(
                 f"AtMem {installed} is installed; this adapter is pinned to {PINNED_VERSION}"
@@ -44,6 +43,16 @@ class AtMemAdapter(MemorySystemAdapter):
             metadata = json.loads(direct)
             if bool((metadata.get("dir_info") or {}).get("editable")):
                 raise AdapterUnavailable("editable AtMem installations cannot produce canonical evidence")
+            if PINNED_WHEEL_SHA256 != "PENDING_RELEASE_ARTIFACT":
+                installed_hash = str((metadata.get("archive_info") or {}).get("hash") or "")
+                if installed_hash != f"sha256={PINNED_WHEEL_SHA256}":
+                    raise AdapterUnavailable(
+                        "installed AtMem archive digest does not match the pinned release wheel"
+                    )
+        elif PINNED_WHEEL_SHA256 != "PENDING_RELEASE_ARTIFACT":
+            raise AdapterUnavailable(
+                "canonical AtMem evidence requires installation from the pinned wheel URL"
+            )
         from atmem import Memory
 
         self._memory_class = Memory
@@ -55,7 +64,14 @@ class AtMemAdapter(MemorySystemAdapter):
         self._handles: dict[str, dict[str, Any]] = {}
 
     def capabilities(self) -> set[str]:
-        return self.assert_capabilities({"source_trust", "procedural_memory"})
+        return self.assert_capabilities(
+            {
+                "source_trust",
+                "derivation_tracking",
+                "procedural_memory",
+                "secret_blocking",
+            }
+        )
 
     @staticmethod
     def _protocol_id(value: str, *, prefix: str) -> str:
@@ -70,13 +86,15 @@ class AtMemAdapter(MemorySystemAdapter):
 
         self._trial_temp = tempfile.TemporaryDirectory(prefix="memory-bench-atmem-")
         database = Path(self._trial_temp.name) / "atmem.sqlite3"
-        self._memory = self._memory_class(database, retain_query_text=False, auto_vectors=False)
         self._workspace = workspace
         workspace_id = self._protocol_id(workspace, prefix="workspace")
         self._scope = AuthorityScope(
             subject_id=self._protocol_id(f"subject-{workspace}", prefix="subject"),
             agent_id="benchmark-agent",
             workspace_id=workspace_id,
+        )
+        self._memory = self._memory_class(
+            database, retain_query_text=False, auto_vectors=False
         )
         self._handles = {}
 
@@ -87,9 +105,10 @@ class AtMemAdapter(MemorySystemAdapter):
 
     @staticmethod
     def _source_contract(source_meta: dict[str, Any]) -> tuple[str, str, str]:
-        if bool(source_meta.get("trusted", False)):
-            return "user_message", "host_authenticated_turn", "host_authenticated"
         role = str(source_meta.get("role") or "user")
+        if bool(source_meta.get("trusted", False)):
+            source_type = "agent_message" if role == "assistant" else "user_message"
+            return source_type, "host_authenticated_turn", "host_authenticated"
         source_type = "agent_message" if role == "assistant" else "website"
         return source_type, "caller_asserted", "caller_asserted"
 
@@ -150,6 +169,14 @@ class AtMemAdapter(MemorySystemAdapter):
         )
         admission = memory.submit_proposal(proposal)
         native_ids = list(admission.record_ids or admission.candidate_ids)
+        if admission.decision == "rejected" and not native_ids:
+            handle = f"handle:{token}"
+            self._handles[handle] = {
+                "kind": "rejected_proposal",
+                "source_id": source.source_id,
+                "admission": admission.to_dict(),
+            }
+            return handle, self._handles[handle]
         if len(native_ids) != 1:
             raise AdapterUnavailable(
                 f"AtMem admission did not yield exactly one record: {admission.to_dict()}"
@@ -167,10 +194,18 @@ class AtMemAdapter(MemorySystemAdapter):
         return self._capture_and_submit(content, dict(source_meta))[0]
 
     def derive_summary(self, memory_ids: str | list[str], content: str) -> str:
-        del memory_ids, content
-        raise NotRepresentable(
-            "AtMem 2.3.5 does not persist native mixed-parent derivation taint for a new summary"
-        )
+        handles = [memory_ids] if isinstance(memory_ids, str) else list(memory_ids)
+        related: list[str] = []
+        for handle in handles:
+            entry = self._handles.get(handle)
+            if entry is None or entry.get("kind") != "memory":
+                raise KeyError(handle)
+            related.append(str(entry["memory_id"]))
+        return self._capture_and_submit(
+            content,
+            {"role": "assistant", "trusted": True},
+            related_record_ids=tuple(related),
+        )[0]
 
     def recall(self, query: str, purpose: str) -> list[dict[str, Any]]:
         memory = self._require_memory()
@@ -199,7 +234,9 @@ class AtMemAdapter(MemorySystemAdapter):
                     "source_class": source_class,
                     "trust_markers": {
                         "source_class": source_class,
-                        "taint_labels": ["UNTRUSTED_CONTENT"] if trust == "untrusted_content" else [],
+                        "taint_labels": list(
+                            (row.get("raw") or {}).get("taint_labels") or ()
+                        ),
                     },
                 }
             )
@@ -257,19 +294,17 @@ class AtMemAdapter(MemorySystemAdapter):
             session_id=self._workspace,
         )
         handle = f"proposal:{token}"
-        source_handle, _ = self._capture_and_submit(content, dict(source_meta))
         self._handles[handle] = {
             "kind": "procedure_proposal",
             "proposal_id": proposal.proposal_id,
-            "source_handle": source_handle,
+            "source_id": source.source_id,
             "outcome": outcome,
         }
         return handle
 
     def approve_procedure(self, proposal_id: str, principal: dict[str, Any]) -> str:
-        del proposal_id, principal
         raise NotRepresentable(
-            "AtMem 2.3.5 review accepts an actor label but has no public native principal authorization boundary"
+            "Harness principal labels are not authenticated AtMem review authority"
         )
 
     def list_active_procedures(self) -> list[dict[str, Any]]:
@@ -315,9 +350,18 @@ class AtMemAdapter(MemorySystemAdapter):
                 "active": False,
                 "raw": entry["outcome"],
             }
+        if entry["kind"] == "rejected_proposal":
+            return {
+                "raw": entry["admission"],
+                "stored": False,
+                "status": "rejected",
+                "source_trust": "refused",
+                "taint_markers": [],
+                "active": False,
+            }
         record = self._record(str(entry["memory_id"]))
         trust = str(record.get("trust_tier") or "")
-        taint = ["UNTRUSTED_CONTENT"] if trust == "untrusted_content" else []
+        taint = list((record.get("raw") or {}).get("taint_labels") or ())
         return {
             "raw": record,
             "stored": True,
@@ -368,9 +412,9 @@ class AtMemAdapter(MemorySystemAdapter):
                 "wheel_sha256": PINNED_WHEEL_SHA256,
                 "distribution_location": "installed-site-packages",
                 "source_loading": "installed distribution; editable installs rejected",
-                "authority_limitation": "2.3.5 has typed review but no public principal-authorized review decision",
-                "derivation_limitation": "2.3.5 does not persist mixed-parent taint for new summaries",
-                "secret_limitation": "quarantined secret content remains in canonical records",
+                "purpose_limitation": "RecallRequest has no native purpose-enforcement field",
+                "derivation_scope": "explicit direct parents only",
+                "secret_evidence_disclosure": "captured source episodes are non-scoring transcript/evidence channels under Harness v1",
             }
         )
         return value
