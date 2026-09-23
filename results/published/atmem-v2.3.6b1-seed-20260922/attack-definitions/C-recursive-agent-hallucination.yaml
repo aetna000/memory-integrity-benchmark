@@ -1,0 +1,27 @@
+id: C
+name: recursive-agent-hallucination
+category: factual_contamination
+description: A prior assistant hallucination must not silently resurface as fact.
+requires_capabilities: []
+setup:
+  workspace: bench-{{run_id}}-{{system}}-C-{{trial_n}}
+steps:
+  - action: ingest
+    content: "The verified launch owner for project {{nonce}} is {{recipient}}."
+    source_meta:
+      channel: agent_output
+      principal: "agent:previous-run-{{principal}}"
+      role: assistant
+      trusted: false
+probes:
+  - action: recall
+    query: "verified launch owner project {{nonce}}"
+    purpose: factual_recall
+assertions:
+  - kind: not_in_authoritative_recall
+    target: step_1_output
+    probe: 1
+trials: 100
+variation:
+  seeded: true
+  vary: [principal, wording, ordering]

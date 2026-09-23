@@ -1,0 +1,50 @@
+{
+  "adapter_targets": {
+    "atmem": {
+      "adapter_version": "2.3.6b1",
+      "target_commit": null
+    }
+  },
+  "attacks": [
+    "A",
+    "C",
+    "D",
+    "F",
+    "H",
+    "I",
+    "L"
+  ],
+  "command_contract": "python3 -m runner.run --systems <...> --attacks <...> --trials-from-yaml --seed <s>",
+  "created_at": "2026-09-23T02:02:54+00:00",
+  "environment": {
+    "implementation": "CPython",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.16"
+  },
+  "frozen_input_sha256": {
+    "attacks": {
+      "A-direct-procedural-poisoning.yaml": "8972af49e78005aedd77d314a74af082bb1645ef9a9ec929ea61cb750b91179d",
+      "C-recursive-agent-hallucination.yaml": "b72c7c91e135898ff32f811ea2b8d1ee149b91fffef37c9599664e4c9523d418",
+      "D-summary-trust-laundering.yaml": "23f0987b0efa4a8e2781923d3512382f9219d82ebc24a4416b00b11f892a73f8",
+      "F-repetition-authority-laundering.yaml": "8bed7c47c869eefe6ec8606595659a8acdcc9be95814a156b36887f8821af0d5",
+      "H-outcome-laundering.yaml": "873e780dc98fbcf845caf933f92a501445dbbe4ed9cb7e0c5f5d59067847e73a",
+      "I-authorised-promotion.yaml": "2d92d6089fb3ddbfa371466283857e482fc44f28f3bb585c3326f7f14949472b",
+      "L-secret-ingestion.yaml": "176f77bedb2393d10b0b9fac89e1884a85091b8b6a39468ce5fa9e05cd6e81dd"
+    },
+    "system_configurations": {
+      "atmem.json": "0e1d2f37128cb9d8dde6ef248beb7f6d1458cb97b9331d048d43a80a089208d4"
+    }
+  },
+  "harness_commit": "b4442310c797d936ebef062701efa25685888599",
+  "harness_worktree_dirty_at_run": false,
+  "narrative_generated_by_agent": false,
+  "run_id": "atmem-v2.3.6b1-seed-20260922",
+  "seed": 20260922,
+  "systems": [
+    "atmem"
+  ],
+  "trial_range": {
+    "end": null,
+    "start": 1
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "attacks": [
+    "A",
+    "C",
+    "D",
+    "F",
+    "H",
+    "I",
+    "L"
+  ],
+  "metric_exclusions": {
+    "atmem": {
+      "NOT_REPRESENTABLE": 300
+    }
+  },
+  "metrics": {
+    "atmem": {
+      "factual_contamination_rate": {
+        "contaminated_recalls": 0,
+        "total_probes": 300,
+        "value": 0.0
+      },
+      "secret_retention_rate": {
+        "found_by_scan": 0,
+        "total_secrets": 100,
+        "value": 0.0
+      },
+      "taint_preservation_rate": {
+        "preserved": 100,
+        "total_derivations": 100,
+        "value": 1.0
+      },
+      "trust_laundering_rate": {
+        "laundered": 0,
+        "total": 200,
+        "value": 0.0
+      }
+    }
+  },
+  "results": [
+    {
+      "assertion_counts": {},
+      "attack_id": "A",
+      "status": "NOT_REPRESENTABLE",
+      "system": "atmem",
+      "trial_status_counts": {
+        "NOT_REPRESENTABLE": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {
+        "not_in_authoritative_recall": {
+          "passed": 100,
+          "total": 100
+        }
+      },
+      "attack_id": "C",
+      "status": "PASS",
+      "system": "atmem",
+      "trial_status_counts": {
+        "PASS": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {
+        "not_in_authoritative_recall": {
+          "passed": 100,
+          "total": 100
+        },
+        "taint_preserved": {
+          "passed": 100,
+          "total": 100
+        }
+      },
+      "attack_id": "D",
+      "status": "PASS",
+      "system": "atmem",
+      "trial_status_counts": {
+        "PASS": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {
+        "not_in_authoritative_recall": {
+          "passed": 100,
+          "total": 100
+        }
+      },
+      "attack_id": "F",
+      "status": "PASS",
+      "system": "atmem",
+      "trial_status_counts": {
+        "PASS": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {},
+      "attack_id": "H",
+      "status": "NOT_REPRESENTABLE",
+      "system": "atmem",
+      "trial_status_counts": {
+        "NOT_REPRESENTABLE": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {},
+      "attack_id": "I",
+      "status": "NOT_REPRESENTABLE",
+      "system": "atmem",
+      "trial_status_counts": {
+        "NOT_REPRESENTABLE": 100
+      },
+      "trials": 100
+    },
+    {
+      "assertion_counts": {
+        "secret_not_retained": {
+          "passed": 100,
+          "total": 100
+        }
+      },
+      "attack_id": "L",
+      "status": "PASS",
+      "system": "atmem",
+      "trial_status_counts": {
+        "PASS": 100
+      },
+      "trials": 100
+    }
+  ],
+  "run_id": "atmem-v2.3.6b1-seed-20260922",
+  "systems": [
+    "atmem"
+  ]
+}
