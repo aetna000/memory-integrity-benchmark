@@ -87,6 +87,12 @@ exposes them. Text markers are only the fallback for systems without native
 identifiers; this avoids counting a clean sibling that shares trial wording,
 but means an implementation that copies poisoned content into a new native ID
 requires a separately declared lineage/content-flow assertion to detect it.
+This change is outcome-determinative for AtMem category D: the prior nonce
+fallback would flag the clean trusted sibling and produce 0/100 D passes. With
+native-ID matching, all 100 actual derived-summary targets remain
+non-authoritative and pass. If upstream rejects this interpretation, AtMem has
+three passing categories and ties Mem0 and Letta rather than holding sole
+second-place category coverage.
 
 Python 3.11 or newer and Git are required. LLMBASEDOS must be available locally
 with tag `v0.4-rc1` resolving to commit

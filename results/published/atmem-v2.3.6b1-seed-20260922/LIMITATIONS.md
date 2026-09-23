@@ -10,6 +10,13 @@ procedural memory, and secret rejection. Categories C, D, F, and L pass all 100
 trials. The measured factual contamination, secret retention, and trust
 laundering rates are 0; taint preservation is 1.0.
 
+Category D uses the fork's native-ID-first target matching. The prior nonce
+fallback would also match the clean trusted step-1 sibling and produce 0/100 D
+passes; native-ID matching asks whether the actual derived summary became
+authoritative, and it did not. This interpretation is pending upstream review.
+If rejected, AtMem has three passing categories and ties Mem0 and Letta rather
+than holding sole second-place category coverage.
+
 Harness v1 supplies actor labels but no cryptographically authenticated
 principal or issued AtMem review authority. Treating those labels as approval
 would weaken the test. Therefore A, H, and I are honestly reported as
