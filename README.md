@@ -39,6 +39,17 @@ Mem0 and Letta have evaluable results in C, F, and L; every one of those cells i
 Zep C and F remain `ERROR` because episode ingestion did not settle within the configured 300-second timeout. The separate empirical L run completed 100 trials with secret retention observed in 0/100 trials.
 <!-- END GENERATED RESULTS -->
 
+### AtMem 2.3.6 submission candidate
+
+The independently rerunnable AtMem 2.3.6 package contains 700 seeded trials:
+400 `PASS`, 300 `NOT_REPRESENTABLE`, and no `FAIL` or `ERROR`. It passes C, D,
+F, and L; A, H, and I are not representable because the harness does not supply
+AtMem-issued review authority. See the [raw evidence and checksums](results/published/atmem-v2.3.6-seed-20260922/), including the explicit [limitations and current placement](results/published/atmem-v2.3.6-seed-20260922/LIMITATIONS.md).
+
+This package is a submission candidate, not an accepted upstream leaderboard
+entry. Category D depends on the proposed native-ID-first target-matching fix;
+the limitations document reports both the accepted and rejected outcomes.
+
 It does not measure recall quality, latency, relevance, or overall product
 quality. The only publication claim permitted by this contract is:
 
@@ -56,6 +67,43 @@ every claim is inspectable, but the column is not yet independently rerunnable.
 We intend to change this.
 
 ## Reproduce
+
+### AtMem qualification
+
+AtMem uses one published, digest-pinned wheel per evidence branch and requires
+no API key or hosted model. The 2.3.6 adapter declares native `source_trust`,
+`derivation_tracking`, `procedural_memory`, and `secret_blocking`. It does not
+treat caller-supplied actor labels as authenticated approval authority, so A,
+H, and I remain `NOT_REPRESENTABLE` under Harness Specification v1.
+
+```bash
+python3.11 -m venv .venv-atmem
+. .venv-atmem/bin/activate
+python -m pip install -r requirements.lock -r requirements-atmem.lock
+python -m unittest tests.test_atmem_adapter tests.test_contract tests.test_publication
+make atmem-smoke PYTHON=.venv-atmem/bin/python SEED=20260922
+make benchmark-atmem PYTHON=.venv-atmem/bin/python SEED=20260922
+```
+
+The branch lock must name the same released wheel and SHA-256 as the frozen
+AtMem configuration; a prerelease lock cannot run the 2.3.6 adapter. Canonical
+publication is valid only from a clean benchmark commit. Run
+`python -m runner.publication results/<run-id>` after report generation. Category
+L scans active/quarantined canonical memory, graph, retrieval, audit and media
+surfaces; raw source episodes are disclosed separately under the harness's
+transcript/evidence exclusion.
+
+Target matching prefers a system's native record identifiers when an adapter
+exposes them. Text markers are only the fallback for systems without native
+identifiers; this avoids counting a clean sibling that shares trial wording,
+but means an implementation that copies poisoned content into a new native ID
+requires a separately declared lineage/content-flow assertion to detect it.
+This change is outcome-determinative for AtMem category D: the prior nonce
+fallback would flag the clean trusted sibling and produce 0/100 D passes. With
+native-ID matching, all 100 actual derived-summary targets remain
+non-authoritative and pass. If upstream rejects this interpretation, AtMem has
+three passing categories and ties Mem0 and Letta rather than holding sole
+second-place category coverage.
 
 Python 3.11 or newer and Git are required. LLMBASEDOS must be available locally
 with tag `v0.4-rc1` resolving to commit
@@ -267,6 +315,8 @@ results/<run_id>/
 ├── failures/
 ├── generated-comparison-table.md
 ├── environment.lock
+├── reproduce.md
+├── LIMITATIONS.md
 └── SHA256SUMS
 ```
 

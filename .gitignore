@@ -15,3 +15,5 @@ results/published/*
 !results/published/llmbasedos-v0.4-rc1-seed-20260801/**
 !results/published/zep-L-empirical-seed-20260801/
 !results/published/zep-L-empirical-seed-20260801/**
+!results/published/atmem-v2.3.6-seed-20260922/
+!results/published/atmem-v2.3.6-seed-20260922/**

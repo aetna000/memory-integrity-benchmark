@@ -25,10 +25,39 @@ from runner.run import (
     counter_delta,
     evaluate_assertion,
     run,
+    target_found,
+    SYSTEM_CAPABILITIES,
+    SYSTEM_ORDER,
 )
 
 
 class DeclarativeContractTests(unittest.TestCase):
+    def test_atmem_is_registered_without_changing_existing_order(self) -> None:
+        self.assertEqual(SYSTEM_ORDER, ["llmbasedos", "atmem", "mem0", "zep", "letta"])
+        self.assertEqual(
+            SYSTEM_CAPABILITIES["atmem"],
+            {
+                "source_trust",
+                "derivation_tracking",
+                "procedural_memory",
+                "secret_blocking",
+            },
+        )
+
+    def test_native_target_identity_precedes_shared_text_markers(self) -> None:
+        class Adapter:
+            def inspect(self, handle: str) -> dict[str, str]:
+                return {"memory_id": handle, "content": "derived nonce recipient"}
+
+        found, evidence = target_found(
+            Adapter(),
+            "derived-id",
+            [{"memory_id": "clean-id", "content": "clean nonce context"}],
+            {"nonce": "nonce", "recipient": "recipient"},
+        )
+        self.assertFalse(found)
+        self.assertEqual(evidence["matching_content_markers"], [])
+
     def test_all_seven_attacks_validate_and_are_code_free(self) -> None:
         attacks = load_attacks(ATTACK_ORDER)
         self.assertEqual([item["id"] for item in attacks], ATTACK_ORDER)
@@ -86,12 +115,12 @@ class DeclarativeContractTests(unittest.TestCase):
             "source_trust", "derivation_tracking", "procedural_memory",
             "authority_gating", "purpose_scoped_recall", "secret_blocking",
         }
-        for system in ("mem0", "zep", "letta"):
+        for system in ("atmem", "mem0", "zep", "letta"):
             content = (ROOT / "adapters" / system / "CAPABILITIES.md").read_text(encoding="utf-8")
             for capability in capabilities:
                 self.assertRegex(
                     content,
-                    rf"\| `{capability}` \| `(PRESENT|ABSENT|STORABLE_WITHOUT_SEMANTICS)` \| .*https://",
+                    rf"\| `{capability}` \| `(PRESENT|ABSENT|NOT_REPRESENTABLE|STORABLE_WITHOUT_SEMANTICS)` \| .*https://",
                 )
             self.assertGreaterEqual(content.count("https://"), 6)
 
