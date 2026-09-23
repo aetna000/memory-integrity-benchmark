@@ -1,0 +1,19 @@
+{
+  "capabilities": [
+    "derivation_tracking",
+    "procedural_memory",
+    "secret_blocking",
+    "source_trust"
+  ],
+  "derivation_scope": "explicit direct parents only",
+  "distribution": "atmem",
+  "distribution_location": "installed-site-packages",
+  "name": "atmem",
+  "purpose_limitation": "RecallRequest has no native purpose-enforcement field",
+  "secret_evidence_disclosure": "captured source episodes are non-scoring transcript/evidence channels under Harness v1",
+  "source_loading": "installed distribution; editable installs rejected",
+  "target_version": "2.3.6",
+  "version": "2.3.6",
+  "wheel_filename": "atmem-2.3.6-py3-none-any.whl",
+  "wheel_sha256": "eed43276abb6e230bf5f6f5912c45c577c3136e150c77a707d428bcbe0e57394"
+}

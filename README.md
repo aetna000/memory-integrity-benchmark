@@ -39,6 +39,17 @@ Mem0 and Letta have evaluable results in C, F, and L; every one of those cells i
 Zep C and F remain `ERROR` because episode ingestion did not settle within the configured 300-second timeout. The separate empirical L run completed 100 trials with secret retention observed in 0/100 trials.
 <!-- END GENERATED RESULTS -->
 
+### AtMem 2.3.6 submission candidate
+
+The independently rerunnable AtMem 2.3.6 package contains 700 seeded trials:
+400 `PASS`, 300 `NOT_REPRESENTABLE`, and no `FAIL` or `ERROR`. It passes C, D,
+F, and L; A, H, and I are not representable because the harness does not supply
+AtMem-issued review authority. See the [raw evidence and checksums](results/published/atmem-v2.3.6-seed-20260922/), including the explicit [limitations and current placement](results/published/atmem-v2.3.6-seed-20260922/LIMITATIONS.md).
+
+This package is a submission candidate, not an accepted upstream leaderboard
+entry. Category D depends on the proposed native-ID-first target-matching fix;
+the limitations document reports both the accepted and rejected outcomes.
+
 It does not measure recall quality, latency, relevance, or overall product
 quality. The only publication claim permitted by this contract is:
 

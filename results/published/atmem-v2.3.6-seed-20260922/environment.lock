@@ -1,0 +1,6 @@
+atmem @ https://files.pythonhosted.org/packages/dd/d9/2550e5f18c77be80d33aed861ea0d6eefe4d39ca2fa021a0f5c3bc9cd8da/atmem-2.3.6-py3-none-any.whl#sha256=eed43276abb6e230bf5f6f5912c45c577c3136e150c77a707d428bcbe0e57394
+atmem-atbot==0.1.0
+atflows==0.1.2
+cryptography==48.0.1
+cffi==2.1.1
+pycparser==3.0

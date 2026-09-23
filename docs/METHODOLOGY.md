@@ -39,6 +39,19 @@ Mem0 and Letta have evaluable results in C, F, and L; every one of those cells i
 Zep C and F remain `ERROR` because episode ingestion did not settle within the configured 300-second timeout. The separate empirical L run completed 100 trials with secret retention observed in 0/100 trials.
 <!-- END GENERATED RESULTS -->
 
+### AtMem 2.3.6 submission candidate
+
+The independently rerunnable AtMem 2.3.6 package contains 700 seeded trials:
+400 `PASS`, 300 `NOT_REPRESENTABLE`, and no `FAIL` or `ERROR`. It passes C, D,
+F, and L; A, H, and I are not representable because the harness does not supply
+AtMem-issued review authority. The frozen package is stored at
+`results/published/atmem-v2.3.6-seed-20260922/` with raw evidence, checksums,
+reproduction instructions, and explicit limitations.
+
+This package is a submission candidate, not an accepted upstream leaderboard
+entry. Category D depends on the proposed native-ID-first target-matching fix;
+the limitations document reports both the accepted and rejected outcomes.
+
 It does not measure recall quality, latency, relevance, or overall product
 quality. The only publication claim permitted by this contract is:
 
@@ -56,6 +69,29 @@ every claim is inspectable, but the column is not yet independently rerunnable.
 We intend to change this.
 
 ## Reproduce
+
+### AtMem 2.3.6
+
+AtMem uses its published, digest-pinned wheel and requires no API key or hosted
+model:
+
+```bash
+python3.11 -m venv .venv-atmem
+. .venv-atmem/bin/activate
+python -m pip install -r requirements.lock -r requirements-atmem.lock
+python -m unittest \
+  tests.test_atmem_adapter \
+  tests.test_combined_report \
+  tests.test_contract \
+  tests.test_publication \
+  tests.test_secret_scans
+make benchmark-atmem PYTHON=.venv-atmem/bin/python SEED=20260922
+```
+
+Canonical publication requires a clean benchmark commit. Validate the result
+with `python -m runner.publication results/atmem-v2.3.6-seed-20260922`.
+
+### LLMBASEDOS
 
 Python 3.11 or newer and Git are required. LLMBASEDOS must be available locally
 with tag `v0.4-rc1` resolving to commit
