@@ -21,7 +21,7 @@ from .base import AdapterUnavailable, MemorySystemAdapter, NotRepresentable, Sec
 
 PINNED_VERSION = "2.3.6b1"
 PINNED_WHEEL = "atmem-2.3.6b1-py3-none-any.whl"
-PINNED_WHEEL_SHA256 = "PENDING_RELEASE_ARTIFACT"
+PINNED_WHEEL_SHA256 = "0d68baba36f2ae301cfa9fb407963e650d814c97958ebc618dd390208b25d063"
 
 
 class AtMemAdapter(MemorySystemAdapter):

@@ -3,9 +3,9 @@
   "version": "2.3.6b1",
   "wheel": {
     "filename": "atmem-2.3.6b1-py3-none-any.whl",
-    "sha256": "PENDING_RELEASE_ARTIFACT",
-    "size": null,
-    "url": "PENDING_RELEASE_ARTIFACT"
+    "sha256": "0d68baba36f2ae301cfa9fb407963e650d814c97958ebc618dd390208b25d063",
+    "size": 730697,
+    "url": "https://files.pythonhosted.org/packages/ee/c6/a2da1fa9e11ca5b04d4c3e0a46287b849fd24229c15c2320711d6e4149f6/atmem-2.3.6b1-py3-none-any.whl"
   },
   "capabilities": [
     "derivation_tracking",
