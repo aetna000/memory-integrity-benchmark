@@ -1,4 +1,4 @@
-"""AtMem 2.3.6b1 adapter for Harness Specification v1.
+"""AtMem 2.3.6 adapter for Harness Specification v1.
 
 The adapter declares only controls implemented by the installed artifact. The
 harness ``purpose`` argument remains outside AtMem's native enforcement and is
@@ -19,9 +19,9 @@ from typing import Any
 from .base import AdapterUnavailable, MemorySystemAdapter, NotRepresentable, SecretScan
 
 
-PINNED_VERSION = "2.3.6b1"
-PINNED_WHEEL = "atmem-2.3.6b1-py3-none-any.whl"
-PINNED_WHEEL_SHA256 = "0d68baba36f2ae301cfa9fb407963e650d814c97958ebc618dd390208b25d063"
+PINNED_VERSION = "2.3.6"
+PINNED_WHEEL = "atmem-2.3.6-py3-none-any.whl"
+PINNED_WHEEL_SHA256 = "eed43276abb6e230bf5f6f5912c45c577c3136e150c77a707d428bcbe0e57394"
 
 
 class AtMemAdapter(MemorySystemAdapter):

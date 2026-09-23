@@ -1,8 +1,8 @@
 PYTHON ?= python3
-SEED ?= 20260801
+SEED ?= 20260922
 RUN_ID ?= llmbasedos-v0.4-rc1-seed-$(SEED)
 COMPETITOR_RUN_ID ?= competitor-smoke-seed-$(SEED)
-ATMEM_VERSION ?= 2.3.6b1
+ATMEM_VERSION ?= 2.3.6
 ATMEM_RUN_ID ?= atmem-v$(ATMEM_VERSION)-seed-$(SEED)
 
 .PHONY: bootstrap test credentials competitor-smoke atmem-smoke benchmark-atmem benchmark-llmbasedos benchmark-all verify

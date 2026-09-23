@@ -60,7 +60,7 @@ We intend to change this.
 ### AtMem qualification
 
 AtMem uses one published, digest-pinned wheel per evidence branch and requires
-no API key or hosted model. The 2.3.6b1 adapter declares native `source_trust`,
+no API key or hosted model. The 2.3.6 adapter declares native `source_trust`,
 `derivation_tracking`, `procedural_memory`, and `secret_blocking`. It does not
 treat caller-supplied actor labels as authenticated approval authority, so A,
 H, and I remain `NOT_REPRESENTABLE` under Harness Specification v1.
@@ -75,7 +75,7 @@ make benchmark-atmem PYTHON=.venv-atmem/bin/python SEED=20260922
 ```
 
 The branch lock must name the same released wheel and SHA-256 as the frozen
-AtMem configuration; a 2.3.5 lock cannot run the 2.3.6b1 adapter. Canonical
+AtMem configuration; a prerelease lock cannot run the 2.3.6 adapter. Canonical
 publication is valid only from a clean benchmark commit. Run
 `python -m runner.publication results/<run-id>` after report generation. Category
 L scans active/quarantined canonical memory, graph, retrieval, audit and media
